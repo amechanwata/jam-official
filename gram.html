@@ -188,61 +188,20 @@ svg.i{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stro
 <script>
 /* ---------------- data ---------------- */
 const IMG=n=>`gram/${n}.jpg`;
-const ACCOUNTS={
-  rin_jam:{name:'白鳥 凛',av:'av-rin',followers:'41.2万',following:'9',
-    bio:'J.a.M\nblack.',hl:[['black.','r2'],['stage','r9'],['sky','r1']]},
-  hina_jam:{name:'森 陽菜🌸',av:'av-hina',followers:'28.6万',following:'241',
-    bio:'J.a.M しろ担当🤍\nねむいときは、だいたい移動中',hl:[['live🤍','h2'],['lesson','h5'],['そら','h6']]},
-  momoka_jam:{name:'桃花🍑',av:'av-momo',followers:'33.9万',following:'512',
-    bio:'J.a.M ピンク担当🍑\n#りんもも ← 公式です💪\nメイク・ネイルもすき💅',hl:[['りんもも','m6'],['🍑','m1'],['MV','m4']]},
-};
-const ME='hina_jam';           // whose account "you" are browsing as (only changes the bottom avatar)
-const NOW=new Date('2026-10-09T21:00:00+09:00');
-/* [id, account, image, date, likes, caption, comments]  comments: [user, text, replies?] */
-const POSTS=[
- ['r9','rin_jam','r9','2026-07-15','8.9万','ありがとうございました。',[
-   ['hina_jam','かっこよかった…'],['jammy_0412','凛さん最高でした'],['mochi_oshi','陽菜ちゃんの「…」に全部詰まってる']]],
- ['h2','hina_jam','h2','2026-07-15','6.1万','ライブありがとうございました〜！！🤍\n隣で踊るの、何回やっても緊張する😳',[
-   ['momoka_jam','陽菜ちゃんかわいかった〜🍑'],['kuma_jammy','隣って…'],['ao_note','陽菜ちゃんの隣、凛さんの立ち位置なんだよな']]],
- ['r1','rin_jam','r1','2026-08-02','7.4万','.',[
-   ['momoka_jam','凛ちゃん生きてる？🍑',[['rin_jam','生きてる']]],['tsukimi_jammy','句読点だけで投稿する人']]],
- ['h6','hina_jam','h6','2026-08-02','4.8万','空がきれいだった☁️\nおなじ空、見てたらいいな',[
-   ['yuki_jammy','凛さんも今日、空あげてた'],['hn_hn','おなじ空…'],['hina_jam','みんなも見てた〜？☁️']]],
- ['m5','momoka_jam','m5','2026-05-20','5.2万','好きの続き🌇\n10人で見た夕焼け、ずっと覚えてる',[['himeka_daisuki','この景色泣いた']]],
- ['m4','momoka_jam','m4','2026-08-20','5.9万','リボンの行方🎀 MV公開されました！\nほどけても、どこかで繋がってる',[['rinmomo_love','MVのりんもも見た？？']]],
- ['r6','rin_jam','r6','2026-08-28','9.3万','帰り',[
-   ['shiro_hina','左端の髪、だれ？'],['kuro_parka','栗色…'],['mochi_oshi','凛さんの写真、たまに誰かが写ってる']]],
- ['r3','rin_jam','r3','2026-09-05','6.6万','new.',[
-   ['momoka_jam','おそろいにしよ〜🍑',[['rin_jam','いいよ']]],['rinmomo_love','おそろいの約束を公開でするな（ありがとう）'],['jam_kansatsu','どこのスニーカーですか！']]],
- ['m3','momoka_jam','m3','2026-09-12','4.4万','いつもの道、いつもの人と🍑\n帰りにアイス買ってもらった🍦',[
-   ['rinmomo_love','いつもの人ってだれ〜〜〜'],['yuki_jammy','凛さん誰にでもアイス買ってる説'],['momoka_jam','ひみつ🤭']]],
- ['r5','rin_jam','r5','2026-09-18','5.8万','撮影',[['lumen_reader','LUMEN楽しみにしてます']]],
- ['h5','hina_jam','h5','2026-09-18','3.9万','レッスン🩰\n見てるだけで勉強になる人がいる',[
-   ['ao_note','凛さんの「撮影」と照明おなじでは'],['mizu_jam','見てるだけでって何を見てたの陽菜ちゃん']]],
- ['r2','rin_jam','r2','2026-09-25','5.1万','',[['tsukimi_jammy','ついにキャプションも消えた']]],
- ['h3','hina_jam','h3','2026-09-26','5.5万','差し入れのミルクティー🥛\nわたしが好きなの、覚えててくれた',[
-   ['momoka_jam','だれに〜？🤭',[['hina_jam','ひ、ひみつ！']]],['shiro_hina','このミルクティー、No.12のブログと同じ'],['hn_hn','覚えててくれた（誰が）']]],
- ['m2','momoka_jam','m2','2026-09-30','7.7万','顔は出さない約束なので🖤\n#りんもも #となりの人',[
-   ['rin_jam','出てる'],['momoka_jam','ギリセーフ🍑'],['kuma_jammy','出てて草'],['rinmomo_love','約束してるのが一番えらい']]],
- ['r7','rin_jam','r7','2026-10-01','15.2万','',[
-   ['hina_jam','🖤'],['momoka_jam','かっこよ〜〜 撮ったのわたし📸'],['mochi_oshi','陽菜ちゃんの黒ハートだけ…'],['jam_kansatsu','撮ったの桃花ちゃんなの初耳']]],
- ['h4','hina_jam','h4','2026-10-03','4.1万','帰り道。\nちょっとだけ遠回りした',[['kuro_parka','誰と'],['hina_jam','ひとりだよ〜！'],['ao_note','聞いてないのに答えた']]],
- ['m1','momoka_jam','m1','2026-10-04','8.1万','今日もとなり🍑\nだれの？とは言いません🤭\n#りんもも',[['rinmomo_love','凛ちゃんでしょ'],['momoka_jam','ひみつ〜🍑']]],
- ['r4','rin_jam','r4','2026-10-05','6.9万','夜',[['tsukimi_jammy','一文字']]],
- ['m6','momoka_jam','m6','2026-10-06','18.4万','りんもも特集、公開されました🍑🖤\nとなりは、いつもこの人です\n#りんもも',[
-   ['rin_jam','見た'],['hina_jam','ふたりともかわいかった！'],['rinmomo_love','公式最高'],['hn_hn','陽菜ちゃんのコメント、明るすぎて逆に']]],
- ['h1','hina_jam','h1','2026-10-07','9.6万','さむいけど、いい日だった☺️',[
-   ['rin_jam','上着',[['hina_jam','も、持ってる！']]],['yuki_jammy','凛さんがコメントしてる…'],['kuma_jammy','上着ってなに？？？？']]],
- ['r8','rin_jam','r8','2026-10-08','12.8万','忘れ物。',[
-   ['hina_jam','あ！それわたしのです…！',[['rin_jam','知ってる']]],['mochi_oshi','知ってるって何'],['shiro_hina','なんで凛さんが持ってるの'],['ao_note','返しに行かないで投稿するの、凛さんすぎる']]],
-];
-const STORIES={
-  rin_jam:[{img:'r4',at:'3時間前'},{img:'r5',at:'2時間前',text:'撮影。'}],
-  hina_jam:[{img:'h5',at:'5時間前',text:'レッスンおわり〜🩰'},{bg:'#151515',at:'1時間前',plain:'（だれかさんのダンス、\n見すぎて振り飛んだ）'}],
-  momoka_jam:[{img:'m2',at:'6時間前',text:'今日のとなり🖤 #りんもも'},{img:'m1',at:'4時間前',text:'放送まであと7日🍑'}],
-};
-const TAGS={m6:['rin_jam'],m2:['rin_jam']};   // Momoka tags Rin. Nobody tags Hina.
-const FANS=new Set(POSTS.flatMap(p=>p[6].flatMap(c=>[c[0],...(c[2]||[]).map(r=>r[0])])).filter(u=>!ACCOUNTS[u]));
+let ACCOUNTS={}, ME='hina_jam', NOW=new Date(), POSTS=[], STORIES={}, TAGS={}, FANS=new Set();
+
+async function loadGramData(){
+  const res=await fetch('gram-data.json',{cache:'no-store'});
+  if(!res.ok) throw new Error(`gram-data.json の読み込みに失敗しました (${res.status})`);
+  const data=await res.json();
+  ACCOUNTS=data.ACCOUNTS||{};
+  ME=data.ME||'hina_jam';
+  NOW=new Date(data.NOW||Date.now());
+  POSTS=data.POSTS||[];
+  STORIES=data.STORIES||{};
+  TAGS=data.TAGS||{};
+  FANS=new Set(POSTS.flatMap(p=>(p[6]||[]).flatMap(c=>[c[0],...(c[2]||[]).map(r=>r[0])])).filter(u=>!ACCOUNTS[u]));
+}
 
 /* ---------------- helpers ---------------- */
 const $=s=>document.querySelector(s);
@@ -404,9 +363,14 @@ document.addEventListener('click',e=>{
 $('#veil').addEventListener('click',closeSheet);
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(sq)closeStory();else closeSheet()}
   if(sq&&e.key==='ArrowRight')next();if(sq&&e.key==='ArrowLeft')prev()});
-const start=(location.hash||'').slice(1);
-if(ACCOUNTS[start]){state.tab='profile';state.profile=start}
-render();
+loadGramData().then(()=>{
+  const start=(location.hash||'').slice(1);
+  if(ACCOUNTS[start]){state.tab='profile';state.profile=start}
+  render();
+}).catch(err=>{
+  console.error(err);
+  document.querySelector('#view').innerHTML=`<div style="padding:32px 20px;line-height:1.8"><b>frame. の投稿データを読み込めませんでした。</b><br><small>${esc(err.message)}</small></div>`;
+});
 </script>
 </body>
 </html>
