@@ -1,6 +1,13 @@
 {
  "news": [
   {
+   "id": "n9",
+   "date": "2026.10.10",
+   "cat": "MEDIA",
+   "title": "SPECIAL「りんひな 遊園地デート」公開",
+   "thumb": "special/rinhina-yuenchi.jpg"
+  },
+  {
    "id": "n8",
    "date": "2026.10.08",
    "cat": "RELEASE",
@@ -279,6 +286,29 @@
   }
  ],
  "special": [
+  {
+   "id": "rinhina-park",
+   "kind": "chem",
+   "label": "Date Special",
+   "title": "りんひな 遊園地デート",
+   "desc": "同期ふたりで、遊園地へ。",
+   "visual": "special/rinhina-yuenchi.jpg",
+   "a": "rin",
+   "b": "hina",
+   "tag": "#りんひな遊園地",
+   "lead": "同期ふたりで、遊園地へ。",
+   "body": "J.a.Mの同期、凛と陽菜が遊園地で一日を過ごす特別企画。\nメリーゴーランド、食べ歩き、そして観覧車。\nカメラが回っていない時間も、ふたりはずっと隣にいました。",
+   "ab": [
+    "陽菜、観覧車のあいだずっと外見てた。",
+    "楽しそうだったから、よかった。"
+   ],
+   "ba": [
+    "凛が帽子かぶってきたの、ずるいと思いました。",
+    "あ、似合ってたって意味です！",
+    "観覧車のてっぺんで何を話したかは、ひみつです。"
+   ],
+   "story": true
+  },
   {
    "id": "rinmomo",
    "kind": "chem",

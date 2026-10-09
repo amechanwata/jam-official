@@ -229,7 +229,9 @@ const Admin=(()=>{
       <label>タイトル<small>「×」は自動で斜体になります</small><input id="f-title" value="${esc(it.title)}" placeholder="例：Rin × Momoka"></label>
       <label>小見出し<input id="f-label" value="${esc(it.label)}" placeholder="例：Trending Pair"></label>
       <label>カードの一言<small>空欄でもOK</small><input id="f-desc" value="${esc(it.desc)}"></label>
-      <label>カードのビジュアル<select id="f-visual">${opts(chem?VIS_CHEM:VIS_LINK,it.visual)}</select></label>
+      <label>カードのビジュアル<select id="f-visual">${opts(/\//.test(it.visual||'')?[[it.visual,'アップロードした画像'],...(chem?VIS_CHEM:VIS_LINK)]:(chem?VIS_CHEM:VIS_LINK),it.visual)}</select></label>
+      ${/\//.test(it.visual||'')?`<img src="${esc(PREVIEW[it.visual]||it.visual)}" alt="" style="width:100%;max-width:360px;aspect-ratio:16/9;object-fit:cover;background:#eee">`:''}
+      <label class="upl"><span>＋ 画像をアップロードしてビジュアルにする</span><input id="f-visup" type="file" accept="image/*"></label>
       ${chem?`<fieldset><legend>ケミ特集ページ</legend>
         <div class="row2"><label>メンバーA<select id="f-a">${memOpts(it.a)}</select></label><label>メンバーB<select id="f-b">${memOpts(it.b)}</select></label></div>
         <label>ハッシュタグ<small>空欄なら非表示</small><input id="f-tag" value="${esc(it.tag)}" placeholder="例：#りんもも"></label>
@@ -249,6 +251,11 @@ const Admin=(()=>{
         ${isNew?'':`<button type="button" class="adm-btn warn" data-a="delete" style="justify-self:start;margin-top:18px">${confirmDel?'本当に削除する（もう一度押す）':'この項目を削除'}</button>`}
         <p class="mute" style="font-size:12px;margin:6px 0 0">反映した内容は、下の「サイトに公開」を押すまで公開サイトには出ません。</p>
       </form>${status()}`;
+    const vu=$('#f-visup');if(vu)vu.addEventListener('change',async()=>{
+      const file=vu.files&&vu.files[0];if(!file)return;collect(true);
+      const lab=vu.closest('.upl');lab.firstChild.textContent='アップロード中…';
+      try{editing.item.visual=await uploadPhoto(file);renderForm()}
+      catch(e){lab.firstChild.textContent='＋ 画像をアップロードしてビジュアルにする';msg=ghMsg(e);msgErr=true;alertInForm()}});
     const tu=$('#f-thumbup');if(tu)tu.addEventListener('change',async()=>{
       const file=tu.files&&tu.files[0];if(!file)return;collect(true);
       const lab=tu.closest('.upl');lab.firstChild.textContent='アップロード中…';

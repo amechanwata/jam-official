@@ -940,6 +940,7 @@ if(false)$('#galAll').innerHTML=GAL.map(([src,pos,kind,cap,ar,rot])=>{
 /* ================= CMS render (news / blog / special) ================= */
 function specVisual(c){
   const a=M[c.a],b=M[c.b];
+  if(/\.(jpe?g|png|webp)$/i.test(c.visual||''))return pic(c.visual,'50% 40%','','','aspect-ratio:16/9');
   switch(c.visual){
     case 'faces': return a&&b?`<div class="pairpics">${pic(a.img,a.pos)}${pic(b.img,b.pos)}</div>`:'';
     case 'frags': return a&&b?`<div class="stack">${pic(frag(a.id))}${pic(frag(b.id))}</div>`:'';
@@ -1100,13 +1101,15 @@ $('#secret').addEventListener('click',e=>{if(e.target.id==='secret')$('#secret')
 function renderChem(id){
   const c=SPEC(id)||CMS.special.find(x=>x.kind==='chem');if(!c||!M[c.a]||!M[c.b]){$('#chemBody').innerHTML='<p class="mute">この特集は見つかりませんでした。</p><button class="more" data-go="special">SPECIAL</button>';return}
   const a=M[c.a],b=M[c.b];
-  const pics=c.visual!=='frags'
+  const pics=/\.(jpe?g|png|webp)$/i.test(c.visual||'')
+    ?`<button data-photo="${esc(c.visual)}" data-cap="${esc(c.title)}" style="display:block;width:100%;cursor:zoom-in" aria-label="画像を拡大">${pic(c.visual,'50% 40%','','','aspect-ratio:16/9')}</button>`
+    :c.visual!=='frags'
     ?`<div class="pairpics">${pic(a.img,a.pos,'fade')}${pic(b.img,b.pos,'fade')}</div>`
     :`<div class="stack">${pic(frag(a.id))}${pic(frag(b.id))}</div>`;
   $('#chemBody').innerHTML=`
    <button class="more" data-go="special" style="margin-bottom:30px">SPECIAL</button>
    <span class="label mute" style="display:block">Chemistry · ${esc(c.label)}</span>
-   <h1 class="giant" style="margin-top:10px;font-size:clamp(64px,13vw,210px)">${xTitle(c.title)}</h1>
+   <h1 class="giant" style="margin-top:10px;${/[^\x00-\x7F×]/.test(c.title)?'font-size:clamp(38px,6.4vw,96px);line-height:1.15;letter-spacing:.02em;word-break:keep-all;overflow-wrap:anywhere':'font-size:clamp(64px,13vw,210px)'}">${xTitle(c.title)}</h1>
    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:clamp(28px,5vw,80px);margin-top:clamp(40px,6vw,80px);align-items:start">
      <div>${pics}</div>
      <div>
