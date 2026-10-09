@@ -1,5 +1,5 @@
 {
-  "ACCOUNTS": {
+  "accounts": {
     "rin_jam": {
       "name": "白鳥 凛",
       "av": "av-rin",
@@ -64,9 +64,9 @@
       ]
     }
   },
-  "ME": "hina_jam",
-  "NOW": "2026-10-09T21:00:00+09:00",
-  "POSTS": [
+  "me": "hina_jam",
+  "now": "2026-10-09T12:00:00.000Z",
+  "posts": [
     [
       "r9",
       "rin_jam",
@@ -524,7 +524,7 @@
       ]
     ]
   ],
-  "STORIES": {
+  "stories": {
     "rin_jam": [
       {
         "img": "r4",
@@ -561,12 +561,32 @@
       }
     ]
   },
-  "TAGS": {
+  "tags": {
     "m6": [
       "rin_jam"
     ],
     "m2": [
       "rin_jam"
     ]
+  },
+  "meta": {
+    "tone_version": "2026-10-09",
+    "relationships": {
+      "hina_to_rin": {
+        "intensity": 4,
+        "mode": "unintentional",
+        "note": "隠しているつもりだが好きが漏れる"
+      },
+      "rin_to_hina": {
+        "intensity": 2,
+        "mode": "unconscious",
+        "note": "淡白だが陽菜の痕跡を自然に残す"
+      },
+      "momoka_to_rin": {
+        "intensity": 4,
+        "mode": "intentional",
+        "note": "SNS上で積極的に匂わせる"
+      }
+    }
   }
 }

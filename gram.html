@@ -190,17 +190,17 @@ svg.i{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stro
 const IMG=n=>`gram/${n}.jpg`;
 let ACCOUNTS={}, ME='hina_jam', NOW=new Date(), POSTS=[], STORIES={}, TAGS={}, FANS=new Set();
 
-async function loadGramData(){
-  const res=await fetch('gram-data.json',{cache:'no-store'});
-  if(!res.ok) throw new Error(`gram-data.json の読み込みに失敗しました (${res.status})`);
-  const data=await res.json();
-  ACCOUNTS=data.ACCOUNTS||{};
-  ME=data.ME||'hina_jam';
-  NOW=new Date(data.NOW||Date.now());
-  POSTS=data.POSTS||[];
-  STORIES=data.STORIES||{};
-  TAGS=data.TAGS||{};
-  FANS=new Set(POSTS.flatMap(p=>(p[6]||[]).flatMap(c=>[c[0],...(c[2]||[]).map(r=>r[0])])).filter(u=>!ACCOUNTS[u]));
+async function loadFrameData(){
+  const res=await fetch('frame-data.json',{cache:'no-store'});
+  if(!res.ok) throw new Error(`frame-data.json: ${res.status}`);
+  const d=await res.json();
+  ACCOUNTS=d.accounts||{};
+  ME=d.me||'hina_jam';
+  NOW=new Date(d.now||Date.now());
+  POSTS=d.posts||[];
+  STORIES=d.stories||{};
+  TAGS=d.tags||{};
+  FANS=new Set(POSTS.flatMap(p=>(p[6]||[]).flatMap(c=>[c[0],...((c[2]||[]).map(r=>r[0]))])).filter(u=>!ACCOUNTS[u]));
 }
 
 /* ---------------- helpers ---------------- */
@@ -363,14 +363,18 @@ document.addEventListener('click',e=>{
 $('#veil').addEventListener('click',closeSheet);
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(sq)closeStory();else closeSheet()}
   if(sq&&e.key==='ArrowRight')next();if(sq&&e.key==='ArrowLeft')prev()});
-loadGramData().then(()=>{
-  const start=(location.hash||'').slice(1);
-  if(ACCOUNTS[start]){state.tab='profile';state.profile=start}
-  render();
-}).catch(err=>{
-  console.error(err);
-  document.querySelector('#view').innerHTML=`<div style="padding:32px 20px;line-height:1.8"><b>frame. の投稿データを読み込めませんでした。</b><br><small>${esc(err.message)}</small></div>`;
-});
+async function boot(){
+  try{
+    await loadFrameData();
+    const start=(location.hash||'').slice(1);
+    if(ACCOUNTS[start]){state.tab='profile';state.profile=start}
+    render();
+  }catch(err){
+    console.error(err);
+    document.querySelector('#app').innerHTML='<div class=\"empty\" style=\"padding:80px 24px\">frame. の投稿データを読み込めませんでした。</div>';
+  }
+}
+boot();
 </script>
 </body>
 </html>
