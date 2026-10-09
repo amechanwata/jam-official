@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<title>frame. — J.a.M</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@1,6..96,500&display=swap">
+<style>
+/* A fictional photo-sharing app inside the J.a.M world. Phone-shaped on desktop, full screen on phones. Single light look on purpose (it imitates an app UI). */
+:root{
+  --bg:#ffffff; --ink:#0f0f0f; --sub:#737373; --line:#ececec; --soft:#f4f4f4; --link:#2f5f9e;
+  --heart:#e0384f; --ring1:#f2b46b; --ring2:#e0607e; --ring3:#9a6be0; --page:#efede8;
+  --sans:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic",system-ui,sans-serif;
+  --mark:"Bodoni Moda","Didot",Georgia,serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{margin:0;background:var(--page);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.45;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;text-align:inherit}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+[hidden]{display:none!important}
+:focus-visible{outline:2px solid var(--link);outline-offset:2px}
+svg.i{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+.stage{min-height:100svh;display:grid;place-items:center;padding:24px 16px}
+.outside{position:fixed;left:24px;bottom:22px;font-size:11px;letter-spacing:.14em;color:#8a877f;line-height:1.9;max-width:240px}
+.outside a{text-decoration:underline}
+.phone{width:min(100%,420px);height:min(860px,calc(100svh - 48px));background:var(--bg);border-radius:34px;overflow:hidden;position:relative;box-shadow:0 0 0 10px #161616,0 30px 80px rgba(0,0,0,.25);display:flex;flex-direction:column}
+@media (max-width:520px){
+  .stage{padding:0;display:block}
+  .phone{width:100%;height:100svh;border-radius:0;box-shadow:none}
+  .outside{display:none}
+}
+@media (max-width:900px) and (min-width:521px){.outside{display:none}}
+
+/* top bar */
+.top{display:flex;align-items:center;justify-content:space-between;height:52px;padding:0 14px;padding-top:env(safe-area-inset-top,0px);box-sizing:content-box;border-bottom:1px solid transparent;flex:none}
+.mark{font-family:var(--mark);font-style:italic;font-weight:500;font-size:28px;letter-spacing:-.01em}
+.top .acts{display:flex;gap:18px}
+.uname{display:flex;align-items:center;gap:4px;font-weight:700;font-size:20px}
+.uname svg{width:16px;height:16px;stroke-width:2.2}
+.scroll{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+.scroll::-webkit-scrollbar{display:none}
+
+/* bottom nav */
+.nav{flex:none;display:flex;justify-content:space-around;align-items:center;height:50px;border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);box-sizing:content-box;background:var(--bg)}
+.nav button{width:48px;height:44px;display:grid;place-items:center}
+.nav button[aria-current="true"] svg.i{stroke-width:2.6}
+.nav .me{width:26px;height:26px;border-radius:50%;overflow:hidden}
+.nav button[aria-current="true"] .me{box-shadow:0 0 0 2px var(--ink)}
+
+/* avatars + story rings */
+.av{display:block;border-radius:50%;overflow:hidden;background:var(--soft);flex:none}
+.av img{width:100%;height:100%;object-fit:cover}
+.ring{display:block;padding:2.5px;border-radius:50%;background:conic-gradient(from 200deg,var(--ring1),var(--ring2),var(--ring3),var(--ring1));flex:none}
+.ring.seen{background:#d9d9d9}
+.ring>.av{border:2.5px solid var(--bg)}
+.fan-av{display:grid;place-items:center;font-size:12px;font-weight:600;color:#666;background:#eee}
+
+/* stories row */
+.stories{display:flex;gap:14px;padding:10px 14px 12px;overflow-x:auto;border-bottom:1px solid var(--line)}
+.stories::-webkit-scrollbar{display:none}
+.st{display:grid;justify-items:center;gap:5px;width:70px;flex:none}
+.st .av{width:62px;height:62px}
+.st span{font-size:11.5px;max-width:70px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* post */
+.post{border-bottom:1px solid var(--line);padding-bottom:12px}
+.ph{display:flex;align-items:center;gap:10px;padding:10px 12px}
+.ph .av{width:32px;height:32px}
+.ph .who{flex:1;min-width:0;display:grid;line-height:1.25}
+.ph b{font-weight:600;font-size:13.5px}
+.ph small{font-size:11.5px;color:var(--sub)}
+.img{position:relative;aspect-ratio:1;background:var(--soft);overflow:hidden;user-select:none;-webkit-user-select:none}
+.img img{width:100%;height:100%;object-fit:cover}
+.burst{position:absolute;left:50%;top:50%;width:96px;height:96px;margin:-48px;fill:#fff;opacity:0;transform:scale(.4);pointer-events:none;filter:drop-shadow(0 4px 18px rgba(0,0,0,.25))}
+.burst.go{animation:burst .9s ease forwards}
+@keyframes burst{15%{opacity:1;transform:scale(1.1)}30%{transform:scale(.95)}70%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1)}}
+.bar{display:flex;align-items:center;gap:14px;padding:10px 12px 6px}
+.bar .sp{flex:1}
+.like.on svg{fill:var(--heart);stroke:var(--heart)}
+.like.pop{animation:pop .35s ease}
+@keyframes pop{50%{transform:scale(1.2)}}
+.mark-b.on svg{fill:var(--ink)}
+.likes{padding:0 12px;font-weight:600;font-size:13.5px}
+.cap{padding:4px 12px 0;font-size:13.5px;white-space:pre-line;overflow-wrap:anywhere}
+.cap b{font-weight:600;margin-right:5px}
+.tag,.men{color:var(--link)}
+.more{display:block;padding:4px 12px 0;color:var(--sub);font-size:13.5px}
+.date{padding:4px 12px 0;color:var(--sub);font-size:11px;letter-spacing:.02em}
+
+/* profile */
+.pf{padding:12px 16px 0}
+.pf-row{display:flex;align-items:center;gap:22px}
+.pf-row .ring .av{width:82px;height:82px}
+.pf-row .ring{cursor:pointer}
+.cnt{flex:1;display:grid;grid-template-columns:repeat(3,1fr);text-align:center}
+.cnt b{display:block;font-size:16px;font-weight:700}
+.cnt span{font-size:12.5px;white-space:nowrap}
+.cnt b{white-space:nowrap}
+.pf h1{font-size:13.5px;font-weight:600;margin:12px 0 2px}
+.bio{white-space:pre-line;font-size:13.5px}
+.pf-btns{display:grid;grid-template-columns:1fr 1fr auto;gap:6px;margin-top:12px}
+.btn{background:var(--soft);border-radius:8px;padding:7px 10px;font-weight:600;font-size:13.5px;text-align:center}
+.btn.blue{background:#3b82f6;color:#fff}
+.btn.sq{width:34px;display:grid;place-items:center;padding:0}
+.hl{display:flex;gap:16px;padding:16px;overflow-x:auto}
+.hl::-webkit-scrollbar{display:none}
+.hl div{display:grid;justify-items:center;gap:6px;flex:none}
+.hl .av{width:62px;height:62px;box-shadow:0 0 0 1px #dbdbdb,0 0 0 4px #fff,0 0 0 5px #e5e5e5}
+.hl span{font-size:11.5px}
+.tabs{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line)}
+.tabs button{display:grid;place-items:center;height:44px;color:var(--sub);border-top:1px solid transparent;margin-top:-1px}
+.tabs button[aria-pressed="true"]{color:var(--ink);border-top-color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.grid button{aspect-ratio:1;overflow:hidden;background:var(--soft);position:relative}
+.grid img{width:100%;height:100%;object-fit:cover}
+.empty{padding:50px 20px;text-align:center;color:var(--sub);font-size:13.5px}
+
+/* explore */
+.search{margin:8px 12px 10px;background:var(--soft);border-radius:10px;padding:9px 12px;color:var(--sub);display:flex;gap:8px;align-items:center}
+.search svg{width:16px;height:16px}
+
+/* sheets */
+.veil{position:absolute;inset:0;background:rgba(0,0,0,.4);z-index:20;opacity:0;pointer-events:none;transition:opacity .25s}
+.veil.open{opacity:1;pointer-events:auto}
+.sheet{position:absolute;left:0;right:0;bottom:0;z-index:21;background:var(--bg);border-radius:16px 16px 0 0;transform:translateY(100%);transition:transform .32s cubic-bezier(.2,.8,.2,1);max-height:78%;display:flex;flex-direction:column;padding-bottom:env(safe-area-inset-bottom,0px)}
+.sheet.open{transform:none}
+.grab{width:40px;height:4px;border-radius:2px;background:#d4d4d4;margin:8px auto 4px;flex:none}
+.sheet h3{text-align:center;font-size:15px;margin:6px 0 10px;font-weight:700}
+.sheet .body{overflow-y:auto;padding:4px 14px 14px}
+.cm{display:grid;grid-template-columns:34px minmax(0,1fr) 18px;gap:10px;padding:8px 0}
+.cm.reply{margin-left:44px;grid-template-columns:26px minmax(0,1fr) 18px}
+.cm .av{width:34px;height:34px}
+.cm.reply .av{width:26px;height:26px}
+.cm p{margin:0;font-size:13.5px;overflow-wrap:anywhere}
+.cm p b{font-weight:600;margin-right:6px}
+.cm small{display:block;color:var(--sub);font-size:11.5px;margin-top:3px}
+.cm .h{align-self:start;margin-top:8px}
+.cm .h svg{width:14px;height:14px}
+.cm .h.on svg{fill:var(--heart);stroke:var(--heart)}
+.acc{display:flex;align-items:center;gap:12px;padding:10px 4px;width:100%}
+.acc .av{width:52px;height:52px}
+.acc b{font-weight:600}
+.acc .chk{margin-left:auto;width:22px;height:22px;border-radius:50%;border:1.5px solid #ccc}
+.acc .chk.on{border:7px solid #3b82f6}
+
+/* story viewer */
+.story{position:absolute;inset:0;z-index:30;background:#111;display:flex;flex-direction:column;opacity:0;pointer-events:none;transition:opacity .2s}
+.story.open{opacity:1;pointer-events:auto}
+.sbars{display:flex;gap:3px;padding:10px 8px 0;padding-top:calc(10px + env(safe-area-inset-top,0px))}
+.sbars i{flex:1;height:2px;background:rgba(255,255,255,.35);border-radius:1px;overflow:hidden}
+.sbars i b{display:block;height:100%;width:0;background:#fff}
+.shead{display:flex;align-items:center;gap:8px;padding:10px 12px;color:#fff;font-size:13.5px}
+.shead .av{width:32px;height:32px}
+.shead small{opacity:.7}
+.shead .x{margin-left:auto;color:#fff}
+.sbody{flex:1;position:relative;display:grid;place-items:center;overflow:hidden}
+.sbody img{width:100%;height:100%;object-fit:cover}
+.stext{position:absolute;left:50%;top:62%;transform:translate(-50%,-50%);width:max-content;background:rgba(255,255,255,.92);color:#111;padding:6px 12px;border-radius:6px;font-weight:600;font-size:15px;max-width:86%;text-align:center;white-space:pre-line}
+.stext.plain{background:none;color:#fff;font-weight:500;font-size:17px;top:50%;line-height:1.8;max-width:80%}
+.tapL,.tapR{position:absolute;top:0;bottom:0;width:35%;z-index:2}
+.tapL{left:0}.tapR{right:0;width:65%}
+.sfoot{display:flex;gap:12px;align-items:center;padding:10px 12px calc(14px + env(safe-area-inset-bottom,0px));color:#fff}
+.sfoot div{flex:1;border:1px solid rgba(255,255,255,.5);border-radius:22px;padding:9px 14px;font-size:13.5px;opacity:.85}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="stage">
+  <p class="outside">frame.<br>J.a.M のメンバーが使っている、という設定の架空の写真SNSです。<br><a href="./">← J.a.M OFFICIAL SITE</a></p>
+  <div class="phone" id="app">
+    <header class="top" id="top"></header>
+    <main class="scroll" id="view"></main>
+    <nav class="nav" id="nav"></nav>
+    <div class="veil" id="veil"></div>
+    <section class="sheet" id="sheet" role="dialog" aria-modal="true"><div class="grab"></div><h3 id="sheetTitle"></h3><div class="body" id="sheetBody"></div></section>
+    <section class="story" id="story" role="dialog" aria-label="ストーリー"></section>
+  </div>
+</div>
+
+<script>
+/* ---------------- data ---------------- */
+const IMG=n=>`gram/${n}.jpg`;
+const ACCOUNTS={
+  rin_jam:{name:'白鳥 凛',av:'av-rin',followers:'41.2万',following:'9',
+    bio:'J.a.M\nblack.',hl:[['black.','r2'],['stage','r9'],['sky','r1']]},
+  hina_jam:{name:'森 陽菜🌸',av:'av-hina',followers:'28.6万',following:'241',
+    bio:'J.a.M しろ担当🤍\nねむいときは、だいたい移動中',hl:[['live🤍','h2'],['lesson','h5'],['そら','h6']]},
+  momoka_jam:{name:'桃花🍑',av:'av-momo',followers:'33.9万',following:'512',
+    bio:'J.a.M ピンク担当🍑\n#りんもも ← 公式です💪\nメイク・ネイルもすき💅',hl:[['りんもも','m6'],['🍑','m1'],['MV','m4']]},
+};
+const ME='hina_jam';           // whose account "you" are browsing as (only changes the bottom avatar)
+const NOW=new Date('2026-10-09T21:00:00+09:00');
+/* [id, account, image, date, likes, caption, comments]  comments: [user, text, replies?] */
+const POSTS=[
+ ['r9','rin_jam','r9','2026-07-15','8.9万','ありがとうございました。',[
+   ['hina_jam','かっこよかった…'],['jammy_0412','凛さん最高でした'],['mochi_oshi','陽菜ちゃんの「…」に全部詰まってる']]],
+ ['h2','hina_jam','h2','2026-07-15','6.1万','ライブありがとうございました〜！！🤍\n隣で踊るの、何回やっても緊張する😳',[
+   ['momoka_jam','陽菜ちゃんかわいかった〜🍑'],['kuma_jammy','隣って…'],['ao_note','陽菜ちゃんの隣、凛さんの立ち位置なんだよな']]],
+ ['r1','rin_jam','r1','2026-08-02','7.4万','.',[
+   ['momoka_jam','凛ちゃん生きてる？🍑',[['rin_jam','生きてる']]],['tsukimi_jammy','句読点だけで投稿する人']]],
+ ['h6','hina_jam','h6','2026-08-02','4.8万','空がきれいだった☁️\nおなじ空、見てたらいいな',[
+   ['yuki_jammy','凛さんも今日、空あげてた'],['hn_hn','おなじ空…'],['hina_jam','みんなも見てた〜？☁️']]],
+ ['m5','momoka_jam','m5','2026-05-20','5.2万','好きの続き🌇\n10人で見た夕焼け、ずっと覚えてる',[['himeka_daisuki','この景色泣いた']]],
+ ['m4','momoka_jam','m4','2026-08-20','5.9万','リボンの行方🎀 MV公開されました！\nほどけても、どこかで繋がってる',[['rinmomo_love','MVのりんもも見た？？']]],
+ ['r6','rin_jam','r6','2026-08-28','9.3万','帰り',[
+   ['shiro_hina','左端の髪、だれ？'],['kuro_parka','栗色…'],['mochi_oshi','凛さんの写真、たまに誰かが写ってる']]],
+ ['r3','rin_jam','r3','2026-09-05','6.6万','new.',[
+   ['momoka_jam','おそろいにしよ〜🍑',[['rin_jam','いいよ']]],['rinmomo_love','おそろいの約束を公開でするな（ありがとう）'],['jam_kansatsu','どこのスニーカーですか！']]],
+ ['m3','momoka_jam','m3','2026-09-12','4.4万','いつもの道、いつもの人と🍑\n帰りにアイス買ってもらった🍦',[
+   ['rinmomo_love','いつもの人ってだれ〜〜〜'],['yuki_jammy','凛さん誰にでもアイス買ってる説'],['momoka_jam','ひみつ🤭']]],
+ ['r5','rin_jam','r5','2026-09-18','5.8万','撮影',[['lumen_reader','LUMEN楽しみにしてます']]],
+ ['h5','hina_jam','h5','2026-09-18','3.9万','レッスン🩰\n見てるだけで勉強になる人がいる',[
+   ['ao_note','凛さんの「撮影」と照明おなじでは'],['mizu_jam','見てるだけでって何を見てたの陽菜ちゃん']]],
+ ['r2','rin_jam','r2','2026-09-25','5.1万','',[['tsukimi_jammy','ついにキャプションも消えた']]],
+ ['h3','hina_jam','h3','2026-09-26','5.5万','差し入れのミルクティー🥛\nわたしが好きなの、覚えててくれた',[
+   ['momoka_jam','だれに〜？🤭',[['hina_jam','ひ、ひみつ！']]],['shiro_hina','このミルクティー、No.12のブログと同じ'],['hn_hn','覚えててくれた（誰が）']]],
+ ['m2','momoka_jam','m2','2026-09-30','7.7万','顔は出さない約束なので🖤\n#りんもも #となりの人',[
+   ['rin_jam','出てる'],['momoka_jam','ギリセーフ🍑'],['kuma_jammy','出てて草'],['rinmomo_love','約束してるのが一番えらい']]],
+ ['r7','rin_jam','r7','2026-10-01','15.2万','',[
+   ['hina_jam','🖤'],['momoka_jam','かっこよ〜〜 撮ったのわたし📸'],['mochi_oshi','陽菜ちゃんの黒ハートだけ…'],['jam_kansatsu','撮ったの桃花ちゃんなの初耳']]],
+ ['h4','hina_jam','h4','2026-10-03','4.1万','帰り道。\nちょっとだけ遠回りした',[['kuro_parka','誰と'],['hina_jam','ひとりだよ〜！'],['ao_note','聞いてないのに答えた']]],
+ ['m1','momoka_jam','m1','2026-10-04','8.1万','今日もとなり🍑\nだれの？とは言いません🤭\n#りんもも',[['rinmomo_love','凛ちゃんでしょ'],['momoka_jam','ひみつ〜🍑']]],
+ ['r4','rin_jam','r4','2026-10-05','6.9万','夜',[['tsukimi_jammy','一文字']]],
+ ['m6','momoka_jam','m6','2026-10-06','18.4万','りんもも特集、公開されました🍑🖤\nとなりは、いつもこの人です\n#りんもも',[
+   ['rin_jam','見た'],['hina_jam','ふたりともかわいかった！'],['rinmomo_love','公式最高'],['hn_hn','陽菜ちゃんのコメント、明るすぎて逆に']]],
+ ['h1','hina_jam','h1','2026-10-07','9.6万','さむいけど、いい日だった☺️',[
+   ['rin_jam','上着',[['hina_jam','も、持ってる！']]],['yuki_jammy','凛さんがコメントしてる…'],['kuma_jammy','上着ってなに？？？？']]],
+ ['r8','rin_jam','r8','2026-10-08','12.8万','忘れ物。',[
+   ['hina_jam','あ！それわたしのです…！',[['rin_jam','知ってる']]],['mochi_oshi','知ってるって何'],['shiro_hina','なんで凛さんが持ってるの'],['ao_note','返しに行かないで投稿するの、凛さんすぎる']]],
+];
+const STORIES={
+  rin_jam:[{img:'r4',at:'3時間前'},{img:'r5',at:'2時間前',text:'撮影。'}],
+  hina_jam:[{img:'h5',at:'5時間前',text:'レッスンおわり〜🩰'},{bg:'#151515',at:'1時間前',plain:'（だれかさんのダンス、\n見すぎて振り飛んだ）'}],
+  momoka_jam:[{img:'m2',at:'6時間前',text:'今日のとなり🖤 #りんもも'},{img:'m1',at:'4時間前',text:'放送まであと7日🍑'}],
+};
+const TAGS={m6:['rin_jam'],m2:['rin_jam']};   // Momoka tags Rin. Nobody tags Hina.
+const FANS=new Set(POSTS.flatMap(p=>p[6].flatMap(c=>[c[0],...(c[2]||[]).map(r=>r[0])])).filter(u=>!ACCOUNTS[u]));
+
+/* ---------------- helpers ---------------- */
+const $=s=>document.querySelector(s);
+const esc=t=>String(t??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
+const rich=t=>esc(t).replace(/#[^\s#、。！？🍑🖤🤍]+/g,m=>`<span class="tag">${m}</span>`).replace(/@[\w.]+/g,m=>`<span class="men">${m}</span>`);
+const ICON={
+  home:'<path d="M3 10.5 12 3l9 7.5V21h-6v-6H9v6H3z"/>',
+  search:'<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>',
+  heart:'<path d="M12 20.5S3 15 3 8.9A4.6 4.6 0 0 1 12 6.7a4.6 4.6 0 0 1 9 2.2C21 15 12 20.5 12 20.5z"/>',
+  comment:'<path d="M20.6 15.6A8.6 8.6 0 1 0 17 19.6L21 21z"/>',
+  send:'<path d="M21 3 10 14M21 3l-7 18-4-7-7-4z"/>',
+  save:'<path d="M6 3h12v18l-6-5-6 5z"/>',
+  dots:'<circle cx="5" cy="12" r="1.2" fill="currentColor"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/><circle cx="19" cy="12" r="1.2" fill="currentColor"/>',
+  down:'<path d="m6 9 6 6 6-6"/>',
+  back:'<path d="m15 5-7 7 7 7"/>',
+  grid:'<rect x="3" y="3" width="18" height="18" rx="1"/><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/>',
+  tagged:'<rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="12" cy="10" r="3"/><path d="M6.5 19a6 6 0 0 1 11 0"/>',
+  plus:'<rect x="3" y="3" width="18" height="18" rx="5"/><path d="M12 8v8M8 12h8"/>',
+  x:'<path d="M5 5l14 14M19 5 5 19"/>',
+  menu:'<path d="M4 7h16M4 12h16M4 17h16"/>',
+};
+const ic=(n,extra='')=>`<svg class="i" viewBox="0 0 24 24" aria-hidden="true" ${extra}>${ICON[n]}</svg>`;
+const avatar=(u,size='')=>ACCOUNTS[u]?`<span class="av" style="${size}"><img src="${IMG(ACCOUNTS[u].av)}" alt=""></span>`:`<span class="av fan-av" style="${size}">${esc(u[0].toUpperCase())}</span>`;
+function when(d){
+  const t=new Date(d+'T12:00:00+09:00'),days=Math.floor((NOW-t)/864e5);
+  if(days<1)return '今日';if(days<7)return days+'日前';
+  const [y,m,dd]=d.split('-').map(Number);return y===NOW.getFullYear()?`${m}月${dd}日`:`${y}年${m}月${dd}日`;
+}
+const byDate=(a,b)=>b[3].localeCompare(a[3]);
+const P=id=>POSTS.find(p=>p[0]===id);
+const state={tab:'home',profile:'rin_jam',ptab:'grid',open:null,liked:new Set(),saved:new Set(),seen:new Set(),cliked:new Set(),hist:[]};
+
+/* ---------------- views ---------------- */
+function postHTML(p){
+  const [id,u,img,date,likes,cap,cms]=p,on=state.liked.has(id),n=cms.reduce((a,c)=>a+1+(c[2]||[]).length,0);
+  const st=STORIES[u],ring=st?`<span class="ring${state.seen.has(u)?' seen':''}" data-story="${u}">${avatar(u,'width:32px;height:32px')}</span>`:avatar(u,'width:32px;height:32px');
+  return `<article class="post" data-id="${id}">
+    <div class="ph">${ring}<button class="who" data-prof="${u}"><b>${u}</b><small>${ACCOUNTS[u].name}</small></button><button aria-label="その他">${ic('dots')}</button></div>
+    <div class="img" data-dbl="${id}"><img src="${IMG(img)}" alt="" loading="lazy"><svg class="burst" viewBox="0 0 24 24" aria-hidden="true">${ICON.heart}</svg></div>
+    <div class="bar"><button class="like${on?' on':''}" data-like="${id}" aria-label="いいね" aria-pressed="${on}">${ic('heart')}</button><button data-cm="${id}" aria-label="コメント">${ic('comment')}</button><button aria-label="シェア">${ic('send')}</button><span class="sp"></span><button class="mark-b${state.saved.has(id)?' on':''}" data-save="${id}" aria-label="保存">${ic('save')}</button></div>
+    <div class="likes">「いいね！」${likes}件</div>
+    ${cap?`<div class="cap"><b>${u}</b>${rich(cap)}</div>`:''}
+    ${n?`<button class="more" data-cm="${id}">コメント${n}件をすべて見る</button>`:''}
+    <div class="date">${when(date)}</div>
+  </article>`;
+}
+function home(){
+  const order=['rin_jam','hina_jam','momoka_jam'].sort((a,b)=>state.seen.has(a)-state.seen.has(b));
+  return `<div class="stories">${order.map(u=>`<button class="st" data-story="${u}"><span class="ring${state.seen.has(u)?' seen':''}">${avatar(u)}</span><span>${u}</span></button>`).join('')}</div>
+    ${[...POSTS].sort(byDate).map(postHTML).join('')}`;
+}
+function explore(){
+  const mix=[...POSTS].sort((a,b)=>(a[0].slice(1)+a[0][0]).localeCompare(b[0].slice(1)+b[0][0]));
+  return `<div class="search">${ic('search')}検索</div><div class="grid">${mix.map(p=>`<button data-open="${p[0]}" aria-label="投稿を開く"><img src="${IMG(p[2])}" alt="" loading="lazy"></button>`).join('')}</div>`;
+}
+function profile(u){
+  const a=ACCOUNTS[u],mine=POSTS.filter(p=>p[1]===u).sort(byDate);
+  const tagged=POSTS.filter(p=>(TAGS[p[0]]||[]).includes(u)).sort(byDate);
+  const list=state.ptab==='grid'?mine:tagged;
+  return `<div class="pf">
+      <div class="pf-row"><span class="ring${state.seen.has(u)?' seen':''}" data-story="${u}">${avatar(u)}</span>
+        <div class="cnt"><div><b>${mine.length}</b><span>投稿</span></div><div><b>${a.followers}</b><span>フォロワー</span></div><div><b>${a.following}</b><span>フォロー中</span></div></div></div>
+      <h1>${esc(a.name)}</h1><div class="bio">${rich(a.bio)}</div>
+      <div class="pf-btns"><button class="btn blue">フォロー</button><button class="btn">メッセージ</button><button class="btn sq" aria-label="おすすめ">${ic('down','style="width:16px;height:16px"')}</button></div>
+    </div>
+    <div class="hl">${a.hl.map(([t,img])=>`<div><span class="av"><img src="${IMG(img)}" alt=""></span><span>${esc(t)}</span></div>`).join('')}</div>
+    <div class="tabs"><button data-ptab="grid" aria-pressed="${state.ptab==='grid'}" aria-label="投稿">${ic('grid')}</button><button data-ptab="tagged" aria-pressed="${state.ptab==='tagged'}" aria-label="タグ付け">${ic('tagged')}</button></div>
+    ${list.length?`<div class="grid">${list.map(p=>`<button data-open="${p[0]}" aria-label="投稿を開く"><img src="${IMG(p[2])}" alt="" loading="lazy"></button>`).join('')}</div>`:`<div class="empty">タグ付けされた写真はまだありません</div>`}`;
+}
+function single(id){return postHTML(P(id))+'<div style="height:30px"></div>'}
+
+function render(keepScroll){
+  const v=$('#view'),y=v.scrollTop;
+  let top='',body='';
+  if(state.open){
+    top=`<button data-back aria-label="戻る">${ic('back')}</button><b style="font-size:16px">投稿</b><span style="width:24px"></span>`;
+    body=single(state.open);
+  }else if(state.tab==='home'){
+    top=`<span class="mark">frame.</span><span class="acts"><button aria-label="お知らせ">${ic('heart')}</button><button aria-label="メッセージ">${ic('send')}</button></span>`;
+    body=home();
+  }else if(state.tab==='explore'){
+    top=`<span class="mark">frame.</span><span></span>`;body=explore();
+  }else{
+    top=`<button class="uname" data-switch>${state.profile}${ic('down')}</button><span class="acts"><button aria-label="作成">${ic('plus')}</button><button aria-label="メニュー">${ic('menu')}</button></span>`;
+    body=profile(state.profile);
+  }
+  $('#top').innerHTML=top;v.innerHTML=body;v.scrollTop=keepScroll?y:0;
+  $('#nav').innerHTML=`<button data-tab="home" aria-label="ホーム" aria-current="${state.tab==='home'&&!state.open}">${ic('home')}</button>
+    <button data-tab="explore" aria-label="検索" aria-current="${state.tab==='explore'&&!state.open}">${ic('search')}</button>
+    <button data-tab="profile" aria-label="プロフィール" aria-current="${state.tab==='profile'&&!state.open}"><span class="me av"><img src="${IMG(ACCOUNTS[state.profile].av)}" alt=""></span></button>`;
+}
+
+/* ---------------- sheets ---------------- */
+function openSheet(title,html){$('#sheetTitle').textContent=title;$('#sheetBody').innerHTML=html;$('#sheet').classList.add('open');$('#veil').classList.add('open')}
+function closeSheet(){$('#sheet').classList.remove('open');$('#veil').classList.remove('open')}
+function comments(id){
+  const p=P(id),[,u,,date,,cap,cms]=p;
+  const one=(c,k,reply)=>{const key=id+':'+k,on=state.cliked.has(key);
+    return `<div class="cm${reply?' reply':''}">${avatar(c[0])}<div><p><b>${esc(c[0])}</b>${rich(c[1])}</p><small>${when(date)}　返信する</small></div><button class="h${on?' on':''}" data-cl="${key}" aria-label="コメントにいいね">${ic('heart')}</button></div>`};
+  let html=cap?`<div class="cm" style="border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:4px">${avatar(u)}<div><p><b>${u}</b>${rich(cap)}</p><small>${when(date)}</small></div><span></span></div>`:'';
+  cms.forEach((c,i)=>{html+=one(c,i);(c[2]||[]).forEach((r,j)=>html+=one(r,i+'-'+j,true))});
+  openSheet('コメント',html||'<div class="empty">まだコメントはありません</div>');
+}
+function switcher(){
+  openSheet('アカウントを見る',Object.keys(ACCOUNTS).map(u=>`<button class="acc" data-pick="${u}">${avatar(u)}<span><b>${u}</b><br><small style="color:var(--sub)">${esc(ACCOUNTS[u].name)}</small></span><span class="chk${u===state.profile?' on':''}"></span></button>`).join(''));
+}
+
+/* ---------------- stories ---------------- */
+let sq=null,timer=null,raf=null;
+function openStory(u){
+  const users=['rin_jam','hina_jam','momoka_jam'];sq={users,ui:users.indexOf(u),i:0};
+  $('#story').classList.add('open');showFrame();
+}
+function showFrame(){
+  clearTimeout(timer);cancelAnimationFrame(raf);
+  const u=sq.users[sq.ui],list=STORIES[u],f=list[sq.i];state.seen.add(u);
+  $('#story').innerHTML=`<div class="sbars">${list.map((_,k)=>`<i><b style="width:${k<sq.i?100:0}%"></b></i>`).join('')}</div>
+    <div class="shead">${avatar(u)}<b>${u}</b><small>${f.at}</small><button class="x" data-sclose aria-label="閉じる">${ic('x')}</button></div>
+    <div class="sbody" style="background:${f.bg||'#111'}">${f.img?`<img src="${IMG(f.img)}" alt="">`:''}${f.text?`<div class="stext">${rich(f.text)}</div>`:''}${f.plain?`<div class="stext plain">${esc(f.plain)}</div>`:''}
+      <button class="tapL" data-sprev aria-label="前へ"></button><button class="tapR" data-snext aria-label="次へ"></button></div>
+    <div class="sfoot"><div>メッセージを送信</div>${ic('heart')}${ic('send')}</div>`;
+  const bar=$('#story .sbars i:nth-child('+(sq.i+1)+') b'),dur=5000,t0=performance.now();
+  const step=t=>{const k=Math.min(1,(t-t0)/dur);bar.style.width=k*100+'%';if(k<1)raf=requestAnimationFrame(step);else next()};
+  raf=requestAnimationFrame(step);
+}
+function next(){const list=STORIES[sq.users[sq.ui]];if(sq.i<list.length-1)sq.i++;else if(sq.ui<sq.users.length-1){sq.ui++;sq.i=0}else return closeStory();showFrame()}
+function prev(){if(sq.i>0)sq.i--;else if(sq.ui>0){sq.ui--;sq.i=STORIES[sq.users[sq.ui]].length-1}showFrame()}
+function closeStory(){cancelAnimationFrame(raf);$('#story').classList.remove('open');sq=null;render(true)}
+
+/* ---------------- events ---------------- */
+let lastTap={id:null,t:0};
+function like(id,force){
+  const was=state.liked.has(id);if(force&&was)return;
+  was?state.liked.delete(id):state.liked.add(id);
+  document.querySelectorAll(`[data-like="${id}"]`).forEach(b=>{b.classList.toggle('on',!was);b.setAttribute('aria-pressed',!was);b.classList.remove('pop');void b.offsetWidth;b.classList.add('pop')});
+}
+document.addEventListener('click',e=>{
+  const t=e.target.closest('button,[data-dbl],[data-story]');if(!t)return;
+  const d=t.dataset;
+  if(d.sclose!==undefined)return closeStory();
+  if(d.snext!==undefined)return next();
+  if(d.sprev!==undefined)return prev();
+  if(d.story)return openStory(d.story);
+  if(d.tab){state.tab=d.tab;state.open=null;if(d.tab==='profile')state.ptab='grid';closeSheet();return render()}
+  if(d.prof){state.profile=d.prof;state.tab='profile';state.open=null;state.ptab='grid';return render()}
+  if(d.open){state.hist.push(state.tab);state.open=d.open;return render()}
+  if(d.back!==undefined){state.open=null;return render()}
+  if(d.ptab){state.ptab=d.ptab;return render(true)}
+  if(d.switch!==undefined)return switcher();
+  if(d.pick){state.profile=d.pick;state.ptab='grid';closeSheet();return render()}
+  if(d.like)return like(d.like);
+  if(d.save){const on=state.saved.has(d.save);on?state.saved.delete(d.save):state.saved.add(d.save);t.classList.toggle('on',!on);return}
+  if(d.cm)return comments(d.cm);
+  if(d.cl){const on=state.cliked.has(d.cl);on?state.cliked.delete(d.cl):state.cliked.add(d.cl);t.classList.toggle('on',!on);return}
+  if(d.dbl){const now=Date.now();
+    if(lastTap.id===d.dbl&&now-lastTap.t<320){like(d.dbl,true);const b=t.querySelector('.burst');b.classList.remove('go');void b.offsetWidth;b.classList.add('go');lastTap={id:null,t:0}}
+    else lastTap={id:d.dbl,t:now}}
+});
+$('#veil').addEventListener('click',closeSheet);
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(sq)closeStory();else closeSheet()}
+  if(sq&&e.key==='ArrowRight')next();if(sq&&e.key==='ArrowLeft')prev()});
+const start=(location.hash||'').slice(1);
+if(ACCOUNTS[start]){state.tab='profile';state.profile=start}
+render();
+</script>
+</body>
+</html>

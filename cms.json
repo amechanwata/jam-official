@@ -1,0 +1,705 @@
+{
+ "news": [
+  {
+   "id": "n8",
+   "date": "2026.10.08",
+   "cat": "RELEASE",
+   "title": "J.a.M 1st ALBUM「iro.」10月28日発売決定！",
+   "thumb": "rel"
+  },
+  {
+   "id": "n7",
+   "date": "2026.10.06",
+   "cat": "MEDIA",
+   "title": "SPECIAL「CHEMISTRY — RIN × MOMOKA」公開",
+   "thumb": "momoka"
+  },
+  {
+   "id": "n6",
+   "date": "2026.10.02",
+   "cat": "MEDIA",
+   "title": "凛・桃花 バラエティ番組「金曜のトモダチ」出演のお知らせ",
+   "thumb": "rin"
+  },
+  {
+   "id": "n5",
+   "date": "2026.09.28",
+   "cat": "MEMBER",
+   "title": "陽菜 連続ドラマ初出演決定",
+   "thumb": "hina"
+  },
+  {
+   "id": "n4",
+   "date": "2026.09.21",
+   "cat": "LIVE",
+   "title": "J.a.M SUMMER LIVE 2026 オフィシャルフォト公開",
+   "thumb": "live"
+  },
+  {
+   "id": "n3",
+   "date": "2026.09.15",
+   "cat": "OTHER",
+   "title": "ファンクラブ「J.a.M ROOM」会員限定ブログ開始",
+   "thumb": "room"
+  },
+  {
+   "id": "n2",
+   "date": "2026.09.03",
+   "cat": "LIVE",
+   "title": "1st Hall Tour「JAM SESSION」追加公演決定",
+   "thumb": "live"
+  },
+  {
+   "id": "n1",
+   "date": "2026.08.22",
+   "cat": "MEDIA",
+   "title": "アイ・アリサ ファッション誌「LUMEN」11月号登場",
+   "thumb": "ai"
+  }
+ ],
+ "blog": [
+  {
+   "id": "b01",
+   "no": 1,
+   "member": "hina",
+   "date": "2024.11.13",
+   "title": "はじめまして！",
+   "body": "はじめまして！\nJ.a.Mの森陽菜です🌸\n\n今日、デビューしました。\nまだ実感がないです…！\n\n10人でがんばります。\nよろしくお願いします✊\n\n陽菜",
+   "photos": []
+  },
+  {
+   "id": "b02",
+   "no": 2,
+   "member": "rin",
+   "date": "2024.11.14",
+   "title": "はじめまして",
+   "body": "白鳥凛です。\nJ.a.Mでデビューしました。\n\nブログは慣れてないので短いです。\nよろしくお願いします。\n\n凛",
+   "photos": []
+  },
+  {
+   "id": "b04",
+   "no": 4,
+   "member": "yuuna",
+   "date": "2024.12.02",
+   "title": "リーダーです",
+   "body": "ユウナです。\nリーダーをやらせてもらってます。\n\n10人それぞれ、ぜんぜん違う色をしてるので\nそこを見てもらえたらうれしいです。\n\nまだ、ここから。",
+   "photos": []
+  },
+  {
+   "id": "b06",
+   "no": 6,
+   "member": "hina",
+   "date": "2025.01.18",
+   "title": "振り入れ",
+   "body": "新曲の振り入れでした！\nむずかしすぎて泣きそう😭\n\n凛ちゃんが居残りで教えてくれました。\n凛ちゃん、教えるのうまい！\n\nがんばります✊\n\n陽菜",
+   "photos": []
+  },
+  {
+   "id": "b09",
+   "no": 9,
+   "member": "momoka",
+   "date": "2025.03.05",
+   "title": "陽菜とカフェ☕️",
+   "body": "陽菜とカフェ行ってきた〜！\nいちごのやつ食べた🍓\n\n陽菜、途中ずっとスマホ見てにやにやしてた。\n誰とLINEしてたの？笑\n\n桃花",
+   "photos": [
+    {
+     "src": "photos/momoka-cafe.jpg",
+     "cap": "桃花"
+    }
+   ]
+  },
+  {
+   "id": "b12",
+   "no": 12,
+   "member": "hina",
+   "date": "2025.04.22",
+   "title": "差し入れ",
+   "body": "今日は朝から撮影でした📸\n\n凛にミルクティーもらった。\nわたしがこれ好きなの、言ったことあったっけ？\n\nおいしかった〜☺️\n\n陽菜",
+   "photos": []
+  },
+  {
+   "id": "b15",
+   "no": 15,
+   "member": "rin",
+   "date": "2025.06.08",
+   "title": "オフ",
+   "body": "オフでした。\n\n街を歩いた。\n\n凛",
+   "photos": [
+    {
+     "src": "photos/rin-off-street.jpg",
+     "cap": ""
+    }
+   ]
+  },
+  {
+   "id": "b18",
+   "no": 18,
+   "member": "arisa",
+   "date": "2025.08.21",
+   "title": "イヤモニ",
+   "body": "新しいイヤモニが届きました。\n\nライブでは片耳だけ外して、みなさんの声を聴いています。\n気づいてた？\n\nアリサ",
+   "photos": [
+    {
+     "src": "photos/arisa-inear.jpg",
+     "cap": ""
+    }
+   ]
+  },
+  {
+   "id": "b21",
+   "no": 21,
+   "member": "himeka",
+   "date": "2025.10.30",
+   "title": "ぬいぐるみ会議🧸",
+   "body": "お部屋のぬいぐるみが増えすぎて\nメイに「もう座る場所ない」って言われました。\n\nあります。\n\nヒメカ",
+   "photos": []
+  },
+  {
+   "id": "b25",
+   "no": 25,
+   "member": "hina",
+   "date": "2026.01.20",
+   "title": "同期とご飯",
+   "body": "今日は同期とご飯行きました🍚\nたくさん笑った！\n\nまた行こうね\n\n陽菜",
+   "photos": []
+  },
+  {
+   "id": "b27",
+   "no": 27,
+   "member": "rin",
+   "date": "2026.02.09",
+   "title": "探しています",
+   "body": "黒いパーカーが一枚ない。\n\n知っている人がいたら教えてください。\n\n凛",
+   "photos": []
+  },
+  {
+   "id": "b28",
+   "no": 28,
+   "member": "hina",
+   "date": "2026.02.10",
+   "title": "さむい",
+   "body": "さむいです🥶\n\nでも今日はあったかい。\n空がきれいだったので📷\n\n陽菜",
+   "photos": [
+    {
+     "src": "photos/hina-sky.jpg",
+     "cap": ""
+    }
+   ]
+  },
+  {
+   "id": "b30",
+   "no": 30,
+   "member": "hina",
+   "date": "2026.05.14",
+   "title": "仕事終わり",
+   "body": "仕事終わりにご飯。\n美味しかった〜\n\n陽菜",
+   "photos": []
+  },
+  {
+   "id": "b31",
+   "no": 31,
+   "member": "miyuu",
+   "date": "2026.09.29",
+   "title": "ゲーム大会！",
+   "body": "楽屋でゲーム大会しました🎮\n優勝はアイちゃん。強すぎる。\nリベンジします✌️\n\nミユウ",
+   "photos": []
+  },
+  {
+   "id": "b32",
+   "no": 32,
+   "member": "hina",
+   "date": "2026.10.02",
+   "title": "放送楽しみ",
+   "body": "今日は凛と桃花の撮影でした！\n\n二人ともすっごくかわいかった☺️\n放送楽しみ〜！\n\n陽菜",
+   "photos": []
+  },
+  {
+   "id": "b33",
+   "no": 33,
+   "member": "hina",
+   "date": "2026.10.03",
+   "title": "ドラマ撮影でした！",
+   "body": "今日も撮影でした〜！\n難しかったけど楽しかった☺️\n\n帰ったら凛から\n「ちゃんと食べた？」ってLINE来てました笑\n\nお母さん？\n\n陽菜",
+   "photos": [
+    {
+     "src": "photos/hina-set.jpg",
+     "cap": ""
+    }
+   ]
+  },
+  {
+   "id": "b34",
+   "no": 34,
+   "member": "yuuna",
+   "date": "2026.10.04",
+   "title": "リーダーより",
+   "body": "1st ALBUM「iro.」のジャケット撮影が終わりました！\n10人そろっての撮影、久しぶりで楽しかった。\n\nまだ、ここから。\n\nユウナ",
+   "photos": []
+  },
+  {
+   "id": "b35",
+   "no": 35,
+   "member": "momoka",
+   "date": "2026.10.06",
+   "title": "りんもも特集🍑",
+   "body": "りんもも特集見てくれましたかー！？\nたくさんの反響ありがとうございます😭\n\n凛ちゃんほんとに距離感バグってる笑\nでもそれが凛ちゃんなんだよね〜\n\n桃花",
+   "photos": []
+  },
+  {
+   "id": "b36",
+   "no": 36,
+   "member": "rin",
+   "date": "2026.10.06",
+   "title": "最近",
+   "body": "最近忙しいです。\n\n移動中ずっと寝てる人がいるので\n首痛めないのかなと思って見てます。\n\n写真載せたら怒られそうだから載せません。\n\n凛",
+   "photos": [
+    {
+     "src": "photos/rin-city.jpg",
+     "cap": ""
+    }
+   ]
+  },
+  {
+   "id": "b37",
+   "no": 37,
+   "member": "rin",
+   "date": "2026.10.07",
+   "title": "撮影",
+   "body": "撮影でした。\n桃花とのペア、たくさん撮ってもらった。楽しかった。\n\n帰りに陽菜とコンビニ。\n陽菜はいつもプリンを選ぶ。\n\n凛",
+   "photos": []
+  },
+  {
+   "id": "b38",
+   "no": 38,
+   "member": "hina",
+   "date": "2026.10.08",
+   "title": "新曲！",
+   "body": "今日もレッスンでしたー！\n新曲むずかしい！笑\n\nでもみんなで頑張ってます✊\n\n帰りにアイス買ってもらった。\n\nわーい。\n\n陽菜",
+   "photos": []
+  }
+ ],
+ "special": [
+  {
+   "id": "rinmomo",
+   "kind": "chem",
+   "label": "Trending Pair",
+   "title": "Rin × Momoka",
+   "desc": "今話題の“りんもも”に密着。",
+   "visual": "faces",
+   "a": "rin",
+   "b": "momoka",
+   "tag": "#りんもも",
+   "lead": "今話題の“りんもも”に密着。",
+   "body": "バラエティ番組での共演をきっかけにSNSで話題沸騰中の凛と桃花。撮影の合間も笑いの絶えなかった二人に、お互いのことを聞きました。",
+   "ab": [
+    "桃花はよく喋る。聞いてるの、好き。",
+    "一緒にいると時間が早い。"
+   ],
+   "ba": [
+    "凛ちゃんは距離感バグってる！笑",
+    "でもそれが凛ちゃんなんだよね。メンバーみんな慣れてます。"
+   ],
+   "story": false
+  },
+  {
+   "id": "himemei",
+   "kind": "chem",
+   "label": "Princess & Prince",
+   "title": "Himeka × Mei",
+   "desc": "",
+   "visual": "frags",
+   "a": "himeka",
+   "b": "mei",
+   "tag": "",
+   "lead": "お姫様と王子様。ステージの上だけ、ね。",
+   "body": "リボンとネクタイ。正反対の衣装で並ぶ二人は、ライブ定番の“姫メイ”コーナーでおなじみ。",
+   "ab": [
+    "メイはわたしの王子様なの。",
+    "ステージの上だけね♡"
+   ],
+   "ba": [
+    "……衣装の裾、踏まないように見てるだけ。",
+    "まあ、手は貸す。"
+   ],
+   "story": false
+  },
+  {
+   "id": "tour",
+   "kind": "link",
+   "label": "Feature",
+   "title": "Summer Live 2026",
+   "desc": "1st Hall Tour「JAM SESSION」開催決定。",
+   "visual": "live",
+   "go": "live"
+  },
+  {
+   "id": "rinhina",
+   "kind": "chem",
+   "label": "Same Day. Same Stage.",
+   "title": "Rin × Hina",
+   "desc": "",
+   "visual": "eyes",
+   "a": "rin",
+   "b": "hina",
+   "tag": "",
+   "lead": "同じ日に、同じステージでデビューした同期。",
+   "body": "2024年のオーディション「JAM SESSION」で出会った二人。凛はいつも、気づいたら陽菜の隣にいる。",
+   "ab": [
+    "陽菜？　一緒にいると楽。",
+    "気づいたら隣にいる。なんでだろ。"
+   ],
+   "ba": [
+    "凛は……ずるいです。笑",
+    "あ、いい意味で！　誰にでも優しいところ、尊敬してます。"
+   ],
+   "story": true
+  },
+  {
+   "id": "costume",
+   "kind": "link",
+   "label": "Collection",
+   "title": "New Costume",
+   "desc": "1st ALBUM「iro.」衣装、全10着のディテール。",
+   "visual": "costume",
+   "go": "disco"
+  }
+ ],
+ "sns": [
+  {
+   "id": "s00",
+   "account": "jam_official",
+   "date": "2026.10.08",
+   "time": "18:30",
+   "text": "1st ALBUM「iro.」ジャケット撮影、無事終了しました📸\nメンバーのみなさん、お疲れさまでした！\n\n#JaM #iro",
+   "photo": {
+    "src": "photos/official-group.jpg",
+    "cap": ""
+   },
+   "likes": "12.4K",
+   "replies": [
+    {
+     "handle": "kuma_jammy",
+     "text": "りんひなの距離？？？"
+    },
+    {
+     "handle": "sakura__oshi",
+     "text": "また凛さん陽菜ちゃん触ってて草"
+    },
+    {
+     "handle": "jam_kansatsu",
+     "text": "通常運転です"
+    },
+    {
+     "handle": "momo_bu",
+     "text": "桃花ちゃんの位置も見てあげて"
+    }
+   ]
+  },
+  {
+   "id": "s01",
+   "account": "hina_jam",
+   "date": "2026.10.08",
+   "time": "22:14",
+   "text": "ブログ更新しました✍️\n新曲むずかしい〜！",
+   "photo": null,
+   "likes": "3,982",
+   "replies": [
+    {
+     "handle": "shiro_hina",
+     "text": "アイス誰に買ってもらったの？？？"
+    },
+    {
+     "handle": "jammy0412",
+     "text": "陽菜ちゃんおつかれさま！"
+    }
+   ]
+  },
+  {
+   "id": "s02",
+   "account": "rin_jam",
+   "date": "2026.10.07",
+   "time": "14:37",
+   "text": "寒い",
+   "photo": null,
+   "likes": "6,105",
+   "replies": [
+    {
+     "handle": "yuki_jammy",
+     "text": "35分前に同じこと言ってる人いたな"
+    },
+    {
+     "handle": "rin_rin_rin",
+     "text": "凛さんの投稿ひさしぶり"
+    }
+   ]
+  },
+  {
+   "id": "s03",
+   "account": "hina_jam",
+   "date": "2026.10.07",
+   "time": "14:02",
+   "text": "今日寒すぎる🥶\n冬無理です",
+   "photo": null,
+   "likes": "4,219",
+   "replies": [
+    {
+     "handle": "ao_note",
+     "text": "まだ10月だよ笑"
+    },
+    {
+     "handle": "hn_hn",
+     "text": "あったかくしてね"
+    }
+   ]
+  },
+  {
+   "id": "s04",
+   "account": "momoka_jam",
+   "date": "2026.10.06",
+   "time": "21:00",
+   "text": "りんもも特集、見てくれた？🍑✨\nコメント全部読んでます！\n\n#りんもも",
+   "photo": null,
+   "likes": "8,830",
+   "replies": [
+    {
+     "handle": "rinmomo_love",
+     "text": "りんもも最高です"
+    },
+    {
+     "handle": "mochi_oshi",
+     "text": "次はラジオでお願いします！"
+    }
+   ]
+  },
+  {
+   "id": "s05",
+   "account": "rin_jam",
+   "date": "2026.10.06",
+   "time": "00:01",
+   "text": "おやすみ",
+   "photo": null,
+   "likes": "5,477",
+   "replies": [
+    {
+     "handle": "tsukimi_jammy",
+     "text": "おやすみなさい"
+    },
+    {
+     "handle": "kuro_parka",
+     "text": "時間…"
+    }
+   ]
+  },
+  {
+   "id": "s06",
+   "account": "hina_jam",
+   "date": "2026.10.05",
+   "time": "23:58",
+   "text": "おやすみ🌙",
+   "photo": null,
+   "likes": "3,350",
+   "replies": [
+    {
+     "handle": "jammy0412",
+     "text": "おやすみ〜"
+    }
+   ]
+  },
+  {
+   "id": "s07",
+   "account": "miyuu_jam",
+   "date": "2026.10.04",
+   "time": "19:20",
+   "text": "ゲーム大会リベンジ失敗🎮\nアイちゃん強すぎ✌️",
+   "photo": null,
+   "likes": "2,104",
+   "replies": [
+    {
+     "handle": "ai_daisuki",
+     "text": "アイちゃん容赦ない"
+    }
+   ]
+  },
+  {
+   "id": "s08",
+   "account": "himeka_jam",
+   "date": "2026.10.03",
+   "time": "20:45",
+   "text": "今日のお姫様🎀\n衣装のリボンかわいすぎませんか？",
+   "photo": null,
+   "likes": "2,901",
+   "replies": [
+    {
+     "handle": "himeka_daisuki",
+     "text": "かわいいです！！"
+    },
+    {
+     "handle": "lumen_reader",
+     "text": "メイの反応待ち"
+    }
+   ]
+  },
+  {
+   "id": "s09",
+   "account": "mei_jam",
+   "date": "2026.10.03",
+   "time": "20:52",
+   "text": "かわいい",
+   "photo": null,
+   "likes": "3,016",
+   "replies": [
+    {
+     "handle": "himeka_daisuki",
+     "text": "ひめメイ！！！"
+    }
+   ]
+  },
+  {
+   "id": "s10",
+   "account": "jam_official",
+   "date": "2026.10.02",
+   "time": "12:00",
+   "text": "【出演情報】\n10/16（金）「金曜のトモダチ」に凛・桃花が出演します！\nお楽しみに🍑\n\n#りんもも",
+   "photo": null,
+   "likes": "9,412",
+   "replies": [
+    {
+     "handle": "rinmomo_love",
+     "text": "楽しみすぎる"
+    },
+    {
+     "handle": "hn_hn",
+     "text": "陽菜ちゃんは？"
+    }
+   ]
+  }
+ ],
+ "fan": [
+  {
+   "id": "f00",
+   "handle": "tsukimi_jammy",
+   "name": "つきみ",
+   "date": "2026.10.08",
+   "time": "23:10",
+   "text": "今日の配信、凛また陽菜見てなかった？\n#りんひな",
+   "likes": "1,204"
+  },
+  {
+   "id": "f01",
+   "handle": "mochi_oshi",
+   "name": "もち",
+   "date": "2026.10.08",
+   "time": "23:22",
+   "text": "切り抜き見たけど4回見てる\n#りんひな",
+   "likes": "986"
+  },
+  {
+   "id": "f02",
+   "handle": "jam_kansatsu",
+   "name": "J.a.M観測所",
+   "date": "2026.10.08",
+   "time": "23:40",
+   "text": "りんひな営業でしょ",
+   "likes": "312"
+  },
+  {
+   "id": "f03",
+   "handle": "hn_hn",
+   "name": "はなこ",
+   "date": "2026.10.08",
+   "time": "23:41",
+   "text": "営業であの距離なら逆に怖い\n#りんひな",
+   "likes": "2,377"
+  },
+  {
+   "id": "f04",
+   "handle": "yuki_jammy",
+   "name": "ゆき",
+   "date": "2026.10.07",
+   "time": "15:02",
+   "text": "陽菜ちゃん14:02「寒すぎる」\n凛さん14:37「寒い」\n\n同じ場所にいない？\n#りんひな",
+   "likes": "1,845"
+  },
+  {
+   "id": "f05",
+   "handle": "ao_note",
+   "name": "あお",
+   "date": "2026.10.06",
+   "time": "01:12",
+   "text": "陽菜ちゃんのブログ、昔は「凛ちゃん」って書いてたのに、最近は名前出さなくなったの気づいた人いる？\n\n振り入れ回→「凛ちゃん」\n差し入れ回→「凛」\n仕事終わり回→名前なし\n#りんひな",
+   "likes": "3,402"
+  },
+  {
+   "id": "f06",
+   "handle": "kuro_parka",
+   "name": "くろ",
+   "date": "2026.10.06",
+   "time": "01:30",
+   "text": "2月の陽菜ちゃんの空の写真、右下の黒いのなに？\n凛さんが「黒いパーカーが一枚ない」って書いた次の日なんだよな\n#りんひな",
+   "likes": "2,966"
+  },
+  {
+   "id": "f07",
+   "handle": "shiro_hina",
+   "name": "しろ",
+   "date": "2026.10.08",
+   "time": "22:30",
+   "text": "「帰りにアイス買ってもらった。」\n←誰に？？？？？\n#りんひな",
+   "likes": "1,511"
+  },
+  {
+   "id": "f08",
+   "handle": "mizu_jam",
+   "name": "みず",
+   "date": "2026.10.07",
+   "time": "22:05",
+   "text": "凛さんの「陽菜はいつもプリンを選ぶ」で泣いた\nなんで知ってるの\n#りんひな",
+   "likes": "2,048"
+  },
+  {
+   "id": "f09",
+   "handle": "rinmomo_love",
+   "name": "りんもも推し",
+   "date": "2026.10.06",
+   "time": "21:30",
+   "text": "りんもも特集ほんとによかった…\n公式もっとください\n#りんもも",
+   "likes": "1,733"
+  },
+  {
+   "id": "f10",
+   "handle": "momo_bu",
+   "name": "もも部",
+   "date": "2026.10.06",
+   "time": "21:48",
+   "text": "りんひな派もりんもも派も仲良くしよ😇\n#りんもも #りんひな",
+   "likes": "644"
+  },
+  {
+   "id": "f11",
+   "handle": "himeka_daisuki",
+   "name": "姫推し",
+   "date": "2026.10.03",
+   "time": "21:00",
+   "text": "ヒメカ「かわいすぎませんか？」\nメイ（7分後）「かわいい」\n\nひめメイの話もしてください\n#姫メイ",
+   "likes": "1,120"
+  },
+  {
+   "id": "f12",
+   "handle": "sakura__oshi",
+   "name": "さくら",
+   "date": "2026.10.08",
+   "time": "19:02",
+   "text": "ジャケ撮のオフショ、凛さんの手どこにある？？？\n#りんひな",
+   "likes": "1,390"
+  },
+  {
+   "id": "f13",
+   "handle": "lumen_reader",
+   "name": "LUMEN愛読",
+   "date": "2026.10.01",
+   "time": "10:00",
+   "text": "アイちゃんとアリサちゃんのLUMEN、表紙の圧がすごい\n#JAM_LOG",
+   "likes": "402"
+  }
+ ]
+}

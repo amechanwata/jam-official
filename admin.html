@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#F7F6F2">
+<title>J.a.M Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;1,6..96,400&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
+<style>
+:root{--paper:#F7F6F2;--white:#FFFFFF;--ink:#202020;--line:#D8D6D1;--mute:#7a7770;--mred:#9E4B4B;
+  --serif:"Bodoni Moda","Didot","Bodoni 72",Georgia,serif;
+  --sans:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP","Yu Gothic",system-ui,sans-serif;
+  --gut:clamp(16px,4vw,40px);color-scheme:light}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.8;letter-spacing:.02em;-webkit-font-smoothing:antialiased;padding-top:env(safe-area-inset-top,0px)}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;text-align:inherit}
+:focus-visible{outline:1px solid var(--ink);outline-offset:3px}
+[hidden]{display:none!important}
+.wrap{padding-inline:var(--gut);margin-inline:auto}
+.mute{color:var(--mute)}
+.tiny{font-size:9.5px;letter-spacing:.28em;text-transform:uppercase;font-weight:500}
+.more{font-size:10.5px;letter-spacing:.24em;display:inline-flex;align-items:center;gap:12px}
+.more::after{content:"";width:28px;height:1px;background:currentColor}
+.adm{max-width:760px;padding-block:28px 140px}
+.adm h1{font-family:var(--serif);font-weight:400;font-size:40px;line-height:1;margin:0}
+.adm-top{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;margin-bottom:22px}
+.adm-tabs{display:grid;grid-template-columns:repeat(5,1fr);border:1px solid var(--ink);margin-bottom:18px}
+.adm-tabs button{padding:11px 2px;font-size:10px;letter-spacing:.12em;text-align:center;overflow:hidden}
+.adm-tabs button+button{border-left:1px solid var(--ink)}
+.adm-tabs button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.adm-add{width:100%;border:1px dashed var(--mute);padding:14px;font-size:13px;letter-spacing:.1em;text-align:center;margin-bottom:10px}
+.adm-item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 10px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}
+.adm-item .t{font-size:15px;font-weight:500;line-height:1.5;overflow-wrap:anywhere}
+.adm-item .m{font-size:11px;color:var(--mute);letter-spacing:.06em}
+.adm-item .acts{grid-column:2;grid-row:1/3;display:flex;gap:6px}
+.adm-btn{border:1px solid var(--line);background:var(--white);padding:9px 12px;font-size:12px;min-width:44px;min-height:40px;text-align:center}
+.adm-btn.ink{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.adm-btn.warn{color:var(--mred);border-color:color-mix(in srgb,var(--mred) 45%,var(--line))}
+.adm-btn[disabled]{opacity:.35}
+.adm-form{display:grid;gap:16px}
+.adm-form label{display:grid;gap:6px;font-size:10.5px;letter-spacing:.2em;color:var(--mute);text-transform:uppercase}
+.adm-form label small{text-transform:none;letter-spacing:.02em;font-size:11px;line-height:1.6}
+.adm-form input,.adm-form select,.adm-form textarea{font:inherit;font-size:16px;letter-spacing:.01em;text-transform:none;color:var(--ink);background:var(--white);border:1px solid var(--line);padding:11px 12px;border-radius:0;width:100%;min-width:0}
+.adm-form textarea{min-height:9em;resize:vertical;line-height:1.7}
+.adm-form .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.adm-form .check{display:flex;align-items:center;gap:10px;color:var(--ink);font-size:14px;letter-spacing:.02em;text-transform:none}
+.adm-form .check input{width:20px;height:20px}
+.adm-form fieldset{border:0;border-top:1px solid var(--ink);padding:14px 0 0;margin:6px 0 0;display:grid;gap:16px;min-width:0}
+.adm-form legend{font-size:10.5px;letter-spacing:.24em;padding-right:10px}
+.adm-bar{position:fixed;left:0;right:0;bottom:0;z-index:45;background:var(--paper);border-top:1px solid var(--ink);padding:12px var(--gut) calc(12px + env(safe-area-inset-bottom,0px));display:flex;justify-content:space-between;align-items:center;gap:12px}
+.adm-bar .st{font-size:12px;color:var(--mute);min-width:0}
+.adm-bar .st b{color:var(--ink);font-weight:500}
+.adm-note{border:1px solid var(--line);background:var(--white);padding:16px;font-size:13px;line-height:1.9;margin-bottom:18px;overflow-wrap:anywhere}
+.adm-note.err{border-color:var(--mred)}
+.ph-ed{display:grid;grid-template-columns:72px minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+.ph-ed img{width:72px;height:72px;object-fit:cover;background:#e9e6df}
+.ph-ed input{font-size:15px!important}
+.upl{display:block;border:1px dashed var(--mute);padding:14px;text-align:center;font-size:13px;letter-spacing:.06em;color:var(--ink);text-transform:none;cursor:pointer}
+.upl input{display:none}
+@media (max-width:520px){.adm-form .row2{grid-template-columns:1fr}.adm-item{grid-template-columns:minmax(0,1fr)}.adm-item .m,.adm-item .acts{grid-row:auto;grid-column:1}.adm-item .acts{margin-top:6px}}
+</style>
+</head>
+<body>
+<main class="wrap adm" id="adm"></main>
+<script>
+const $=s=>document.querySelector(s);
+const esc=t=>String(t??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
+const byDate=(a,b)=>String(b.date).localeCompare(String(a.date));
+const MEM=[['rin','RIN','白鳥 凛'],['hina','HINA','森 陽菜'],['momoka','MOMOKA','桃花'],['himeka','HIMEKA','ヒメカ'],['mei','MEI','メイ'],
+ ['miyuu','MIYUU','ミユウ'],['arisa','ARISA','アリサ'],['yuuna','YUUNA','ユウナ'],['ai','AI','アイ'],['haruka','HARUKA','ハルカ']].map(([id,en,jp])=>({id,en,jp}));
+const M=Object.fromEntries(MEM.map(m=>[m.id,m]));
+let CMS={news:[],blog:[],special:[],sns:[],fan:[]};
+const byNo=(a,b)=>(+b.no||0)-(+a.no||0);
+const byStamp=(a,b)=>(String(b.date)+String(b.time||'')).localeCompare(String(a.date)+String(a.time||''));
+
+/* ---------- GitHub contents API ---------- */
+const CFG_KEY='jam-admin-cfg';
+function loadCfg(){try{return JSON.parse(localStorage.getItem(CFG_KEY))||{}}catch(e){return{}}}
+const b64enc=str=>{const bytes=new TextEncoder().encode(str);let bin='';for(let i=0;i<bytes.length;i+=0x8000)bin+=String.fromCharCode.apply(null,bytes.subarray(i,i+0x8000));return btoa(bin)};
+const b64dec=b=>new TextDecoder().decode(Uint8Array.from(atob(b.replace(/\s/g,'')),c=>c.charCodeAt(0)));
+const GH={
+  url:(c,path='cms.json')=>`https://api.github.com/repos/${encodeURIComponent(c.owner)}/${encodeURIComponent(c.repo)}/contents/${path}`,
+  headers:c=>({'Authorization':'Bearer '+c.token,'Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28'}),
+  async get(c){
+    const r=await fetch(this.url(c)+'?ref='+encodeURIComponent(c.branch||'main')+'&t='+Date.now(),{headers:this.headers(c),cache:'no-store'});
+    if(!r.ok)throw{status:r.status};
+    const j=await r.json();const d=JSON.parse(b64dec(j.content));
+    return{sha:j.sha,data:{news:d.news||[],blog:d.blog||[],special:d.special||[],sns:d.sns||[],fan:d.fan||[]}};
+  },
+  async put(c,data,sha,message){
+    const r=await fetch(this.url(c),{method:'PUT',headers:{...this.headers(c),'Content-Type':'application/json'},
+      body:JSON.stringify({message,content:b64enc(JSON.stringify(data,null,1)+'\n'),sha,branch:c.branch||'main'})});
+    if(!r.ok)throw{status:r.status};
+    const j=await r.json();return{sha:j.content.sha};
+  },
+  async putFile(c,path,b64,message){
+    const r=await fetch(this.url(c,path),{method:'PUT',headers:{...this.headers(c),'Content-Type':'application/json'},
+      body:JSON.stringify({message,content:b64,branch:c.branch||'main'})});
+    if(!r.ok)throw{status:r.status};
+    return path;
+  }
+};
+/* resize a picked photo on the phone, then upload it to photos/ in the repo */
+const PREVIEW={};
+async function uploadPhoto(file){
+  const url=URL.createObjectURL(file);
+  const img=await new Promise((ok,ng)=>{const i=new Image();i.onload=()=>ok(i);i.onerror=ng;i.src=url});
+  const k=Math.min(1,1400/Math.max(img.naturalWidth,img.naturalHeight));
+  const cv=document.createElement('canvas');cv.width=Math.round(img.naturalWidth*k);cv.height=Math.round(img.naturalHeight*k);
+  cv.getContext('2d').drawImage(img,0,0,cv.width,cv.height);
+  const blob=await new Promise(ok=>cv.toBlob(ok,'image/jpeg',.86));
+  const buf=new Uint8Array(await blob.arrayBuffer());let bin='';for(let i=0;i<buf.length;i+=0x8000)bin+=String.fromCharCode.apply(null,buf.subarray(i,i+0x8000));
+  const path=`photos/up-${Date.now().toString(36)}.jpg`;
+  await GH.putFile(cfg_(),path,btoa(bin),'Upload photo from admin');
+  PREVIEW[path]=URL.createObjectURL(blob);
+  return path;
+}
+function ghMsg(e){
+  const s=e&&e.status;
+  if(s===401)return 'トークンが正しくないか、期限切れです。設定からトークンを入れ直してください。';
+  if(s===403)return 'このトークンには書き込み権限がありません。トークンの「Contents」を「Read and write」にしてください。';
+  if(s===404)return 'リポジトリか cms.json が見つかりません。ユーザー名・リポジトリ名・ブランチと、トークンがこのリポジトリを許可しているかを確認してください。';
+  if(!s)return '通信できませんでした。電波の良いところでもう一度お試しください。';
+  return `GitHub でエラーが起きました（${s}）。少し待ってからもう一度お試しください。`;
+}
+
+/* ---------- editor ---------- */
+const Admin=(()=>{
+  const TABS={news:'NEWS',blog:'BLOG',sns:'SNS',fan:'#JAM_LOG',special:'SPECIAL'};
+  const ACCS=[['jam_official','@jam_official（公式）'],...MEM.map(m=>[m.id+'_jam',`@${m.id}_jam（${m.en}）`])];
+  const CATS2=['RELEASE','LIVE','MEDIA','MEMBER','OTHER'];
+  const THUMBS=[['rel','最新リリースのジャケット'],['live','LIVE（黒地）'],['room','FC ROOM（文字）'],['jam','J.a.M（文字）'],...MEM.map(m=>[m.id,m.en+'（衣装の断片）'])];
+  const VIS_CHEM=[['faces','2人の写真'],['frags','2人の衣装の断片'],['eyes','凛と陽菜の目元']];
+  const VIS_LINK=[['live','LIVE（黒地）'],['costume','衣装の断片 3枚'],['album','アルバムのメインビジュアル'],['jacket','最新ジャケット']];
+  const GOS=[['live','LIVE'],['disco','DISCOGRAPHY'],['movie','MOVIE'],['blog','BLOG'],['news','NEWS'],['profile','MEMBER'],['schedule','SCHEDULE'],['distance','STORY（DISTANCE）']];
+  const KEY='jam-cms-draft';
+  window.cfg_=()=>cfg;
+  let cfg=loadCfg(),sha=null,loaded=false,loadErr='',tab='news',editing=null,draft=null,dirty=false,busy=false,msg='',msgErr=false,confirmDel=false;
+  const el=()=>$('#adm');
+  const clone=o=>JSON.parse(JSON.stringify(o));
+  const today=()=>{const d=new Date();return `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`};
+  const toInput=d=>String(d||'').replace(/\./g,'-');
+  const fromInput=d=>String(d||'').replace(/-/g,'.');
+  const opts=(list,v)=>list.map(([k,l])=>`<option value="${esc(k)}"${k===v?' selected':''}>${esc(l)}</option>`).join('');
+  const memOpts=v=>opts(MEM.map(m=>[m.id,`${m.en}　${m.jp}`]),v);
+  const saveLocal=()=>{try{dirty?localStorage.setItem(KEY,JSON.stringify(draft)):localStorage.removeItem(KEY)}catch(e){}};
+
+  async function ready(){
+    loaded=false;loadErr='';render();
+    if(!cfg.token){loaded=true;render();return}
+    try{const r=await GH.get(cfg);CMS=r.data;sha=r.sha;loaded=true;draft=null;open()}
+    catch(e){loadErr=ghMsg(e);loaded=true;render()}
+  }
+  function open(){
+    if(!loaded){render();return}
+    if(!draft){
+      draft=clone(CMS);
+      try{const s=localStorage.getItem(KEY);if(s){const d=JSON.parse(s);if(d&&d.news){draft={sns:[],fan:[],...d};dirty=true;msg='前回の未公開の変更を復元しました。';}}}catch(e){}
+    }
+    render();
+  }
+  function status(){
+    return `<div class="adm-bar"><span class="st">${busy?'公開しています…':dirty?'<b>未公開の変更があります</b>':'サイトと同じ内容です'}</span>
+      <span style="display:flex;gap:8px">${dirty&&!busy?'<button class="adm-btn" data-a="discard">変更を破棄</button>':''}<button class="adm-btn ink" data-a="publish"${!dirty||busy?' disabled':''}>サイトに公開</button></span></div>`;
+  }
+  function render(){
+    const root=el();if(!root)return;
+    if(showSettings||!cfg.token){renderSettings();return}
+    if(!loaded){root.innerHTML='<p class="mute" style="padding-top:40px">GitHubから読み込み中…</p>';return}
+    if(loadErr||!draft){root.innerHTML=`${head()}<div class="adm-note err">${esc(loadErr||'読み込めませんでした。')}</div><div style="display:flex;gap:10px;flex-wrap:wrap"><button class="adm-btn ink" data-a="reload">もう一度読み込む</button><button class="adm-btn" data-a="settings">接続設定を開く</button></div>`;return}
+    if(editing){renderForm();return}
+    const list=tab==='special'?draft.special:tab==='blog'?[...draft.blog].sort(byNo):tab==='sns'||tab==='fan'?[...draft[tab]].sort(byStamp):[...draft[tab]].sort(byDate);
+    const first=t=>String(t||'').split('\n').map(x=>x.trim()).filter(Boolean)[0]||'';
+    const items=list.map((it,i)=>{
+      let t,m;
+      if(tab==='news'){t=it.title;m=`${it.date}　${it.cat}`}
+      else if(tab==='blog'){t=it.title;m=`No.${it.no}　${it.date}　${(M[it.member]||{}).en||''}${(it.photos||[]).length?'　📷'+it.photos.length:''}`}
+      else if(tab==='sns'){t=first(it.text);m=`${it.date} ${it.time||''}　@${it.account}${it.photo?'　📷':''}`}
+      else if(tab==='fan'){t=first(it.text);m=`${it.date} ${it.time||''}　@${it.handle}`}
+      else{t=it.title;m=it.kind==='chem'?`ケミ特集　${it.label}`:`リンクカード　${it.label}`}
+      const order=tab==='special'?`<button class="adm-btn" data-a="up" data-i="${i}" aria-label="上へ"${i?'':' disabled'}>↑</button><button class="adm-btn" data-a="down" data-i="${i}" aria-label="下へ"${i<list.length-1?'':' disabled'}>↓</button>`:'';
+      return `<div class="adm-item"><span class="t">${esc(t)||'（タイトルなし）'}</span><span class="m">${esc(m)}</span><span class="acts">${order}<button class="adm-btn" data-a="edit" data-id="${esc(it.id)}">編集</button></span></div>`}).join('');
+    root.innerHTML=`${head()}
+      ${msg?`<div class="adm-note${msgErr?' err':''}">${esc(msg)}</div>`:''}
+      <div class="adm-tabs" role="tablist">${Object.entries(TABS).map(([k,l])=>`<button data-a="tab" data-t="${k}" aria-pressed="${k===tab}">${l}<br><span style="font-size:10px;opacity:.6">${draft[k].length}件</span></button>`).join('')}</div>
+      <button class="adm-add" data-a="new">＋ 新しく追加</button>
+      ${items||'<p class="mute">まだありません。</p>'}
+      ${status()}`;
+  }
+  function renderForm(){
+    const it=editing.item,isNew=editing.isNew;let f='';
+    if(tab==='news') f=`
+      <div class="row2"><label>日付<input id="f-date" type="date" value="${esc(toInput(it.date))}"></label>
+      <label>カテゴリ<select id="f-cat">${opts(CATS2.map(c=>[c,c]),it.cat)}</select></label></div>
+      <label>タイトル<input id="f-title" value="${esc(it.title)}" placeholder="例：1st ALBUM「iro.」発売決定！"></label>
+      <label>サムネイル<select id="f-thumb">${opts(THUMBS,it.thumb)}</select></label>`;
+    else if(tab==='sns') f=`
+      <label>アカウント<select id="f-account">${opts(ACCS,it.account)}</select></label>
+      <div class="row2"><label>日付<input id="f-date" type="date" value="${esc(toInput(it.date))}"></label>
+      <label>時刻<input id="f-time" type="time" value="${esc(it.time||'')}"></label></div>
+      <label>本文<small>#から始まる言葉はタグとして青くなります</small><textarea id="f-text" rows="5">${esc(it.text)}</textarea></label>
+      <label>写真（1枚まで）</label>${photoEd(false)}
+      <label>いいね数<small>例：3,201 / 12.4K</small><input id="f-likes" value="${esc(it.likes)}"></label>
+      <label>ファンの返信<small>1行に1件。「ハンドル｜返信」の形で書く（例：kuma_jammy｜りんひなの距離？？？）</small><textarea id="f-replies" rows="6">${esc((it.replies||[]).map(r=>r.handle+'｜'+r.text).join('\n'))}</textarea></label>`;
+    else if(tab==='fan') f=`
+      <div class="row2"><label>表示名<input id="f-name" value="${esc(it.name)}" placeholder="例：つきみ"></label>
+      <label>ハンドル<input id="f-handle" autocapitalize="off" value="${esc(it.handle)}" placeholder="例：tsukimi_jammy"></label></div>
+      <div class="row2"><label>日付<input id="f-date" type="date" value="${esc(toInput(it.date))}"></label>
+      <label>時刻<input id="f-time" type="time" value="${esc(it.time||'')}"></label></div>
+      <label>本文<small>#りんひな などのタグを入れると、#JAM_LOG の絞り込みに出ます</small><textarea id="f-text" rows="6">${esc(it.text)}</textarea></label>
+      <label>いいね数<input id="f-likes" value="${esc(it.likes)}"></label>`;
+    else if(tab==='blog') f=`
+      <div class="row2"><label>メンバー<select id="f-member">${memOpts(it.member)}</select></label>
+      <label>記事番号（No.）<input id="f-no" type="number" inputmode="numeric" value="${esc(it.no)}"></label></div>
+      <label>日付<input id="f-date" type="date" value="${esc(toInput(it.date))}"></label>
+      <label>タイトル<input id="f-title" value="${esc(it.title)}"></label>
+      <label>本文<small>改行はそのまま反映されます</small><textarea id="f-body" rows="10">${esc(it.body)}</textarea></label>
+      <label>写真<small>タップで拡大できるので、写真の端に何かを写り込ませるのも効きます</small></label>${photoEd(true)}`;
+    else{
+      const chem=it.kind==='chem';
+      f=`<label>種類<select id="f-kind">${opts([['chem','ケミ特集（2人の掛け合いページ）'],['link','リンクカード（他のページへ）']],it.kind)}</select></label>
+      <label>タイトル<small>「×」は自動で斜体になります</small><input id="f-title" value="${esc(it.title)}" placeholder="例：Rin × Momoka"></label>
+      <label>小見出し<input id="f-label" value="${esc(it.label)}" placeholder="例：Trending Pair"></label>
+      <label>カードの一言<small>空欄でもOK</small><input id="f-desc" value="${esc(it.desc)}"></label>
+      <label>カードのビジュアル<select id="f-visual">${opts(chem?VIS_CHEM:VIS_LINK,it.visual)}</select></label>
+      ${chem?`<fieldset><legend>ケミ特集ページ</legend>
+        <div class="row2"><label>メンバーA<select id="f-a">${memOpts(it.a)}</select></label><label>メンバーB<select id="f-b">${memOpts(it.b)}</select></label></div>
+        <label>ハッシュタグ<small>空欄なら非表示</small><input id="f-tag" value="${esc(it.tag)}" placeholder="例：#りんもも"></label>
+        <label>リード文<input id="f-lead" value="${esc(it.lead)}"></label>
+        <label>本文<textarea id="f-body" rows="5">${esc(it.body)}</textarea></label>
+        <label>A → B のコメント<small>1行ずつ改行で区切る</small><textarea id="f-ab" rows="4">${esc((it.ab||[]).join('\n'))}</textarea></label>
+        <label>B → A のコメント<small>1行ずつ改行で区切る</small><textarea id="f-ba" rows="4">${esc((it.ba||[]).join('\n'))}</textarea></label>
+        <label class="check"><input id="f-story" type="checkbox"${it.story?' checked':''}> ページ下に STORY（DISTANCE）への入口を出す</label>
+      </fieldset>`:`<label>リンク先<select id="f-go">${opts(GOS,it.go)}</select></label>`}`;
+    }
+    el().innerHTML=`<div class="adm-top"><div><span class="tiny mute">${TABS[tab]}</span><h1>${isNew?'新規作成':'編集'}</h1></div><button class="more" data-a="back">一覧へ戻る</button></div>
+      <form class="adm-form" id="admForm" novalidate>${f}
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px">
+          <button type="submit" class="adm-btn ink" style="flex:1">${isNew?'追加する':'変更を反映'}</button>
+          <button type="button" class="adm-btn" data-a="back">キャンセル</button>
+        </div>
+        ${isNew?'':`<button type="button" class="adm-btn warn" data-a="delete" style="justify-self:start;margin-top:18px">${confirmDel?'本当に削除する（もう一度押す）':'この項目を削除'}</button>`}
+        <p class="mute" style="font-size:12px;margin:6px 0 0">反映した内容は、下の「サイトに公開」を押すまで公開サイトには出ません。</p>
+      </form>${status()}`;
+    const up=$('#f-upload');if(up)up.addEventListener('change',async()=>{
+      const file=up.files&&up.files[0];if(!file)return;collect(true);
+      const lab=up.closest('.upl');lab.firstChild.textContent='アップロード中…';
+      try{const path=await uploadPhoto(file);const it=editing.item;
+        if(tab==='sns')it.photo={src:path};else(it.photos=it.photos||[]).push({src:path,cap:''});renderForm()}
+      catch(e){lab.firstChild.textContent='＋ 写真を選ぶ';msg=ghMsg(e);msgErr=true;alertInForm()}});
+    const k=$('#f-kind');if(k)k.addEventListener('change',()=>{collect(true);editing.item.kind=k.value;editing.item.visual=k.value==='chem'?'faces':'live';if(k.value==='link'&&!editing.item.go)editing.item.go='live';renderForm()});
+    $('#admForm').addEventListener('submit',e=>{e.preventDefault();commit()});
+    window.scrollTo({top:0,behavior:'instant'});
+  }
+  function photoEd(multi){
+    const it=editing.item,list=tab==='sns'?(it.photo?[it.photo]:[]):(it.photos||[]);
+    const rows=list.map((p,i)=>`<div class="ph-ed"><img src="${esc(PREVIEW[p.src]||p.src)}" alt="">${multi?`<input class="ph-cap" data-i="${i}" value="${esc(p.cap||'')}" placeholder="写真の上の手書き文字（空欄OK）">`:'<span></span>'}<button type="button" class="adm-btn warn" data-a="ph-del" data-i="${i}">外す</button></div>`).join('');
+    const canAdd=multi||!list.length;
+    return `<div>${rows}${canAdd?`<label class="upl"><span>＋ 写真を選ぶ</span><input id="f-upload" type="file" accept="image/*"></label>`:''}</div>`;
+  }
+  function collect(partial){
+    const it=editing.item,v=id=>{const x=$('#f-'+id);return x?x.value:undefined},set=(k,val)=>{if(val!==undefined)it[k]=val};
+    set('title',v('title')?.trim());
+    if(tab==='news'){set('date',fromInput(v('date')));set('cat',v('cat'));set('thumb',v('thumb'))}
+    if(tab==='blog'){set('member',v('member'));set('date',fromInput(v('date')));set('body',v('body'));if(v('no')!==undefined)it.no=+v('no')||0;
+      document.querySelectorAll('.ph-cap').forEach(x=>{const p=(it.photos||[])[+x.dataset.i];if(p)p.cap=x.value.trim()})}
+    if(tab==='sns'){set('account',v('account'));set('date',fromInput(v('date')));set('time',v('time'));set('text',v('text'));set('likes',v('likes')?.trim());
+      const r=v('replies');if(r!==undefined)it.replies=r.split('\n').map(l=>l.trim()).filter(Boolean).map(l=>{const m=l.split(/[｜|]/);return m.length>1?{handle:m[0].trim().replace(/^@/,''),text:m.slice(1).join('｜').trim()}:{handle:'fan',text:l}})}
+    if(tab==='fan'){set('name',v('name')?.trim());set('handle',v('handle')?.trim().replace(/^@/,''));set('date',fromInput(v('date')));set('time',v('time'));set('text',v('text'));set('likes',v('likes')?.trim())}
+    if(tab==='special'){set('label',v('label')?.trim());set('desc',v('desc')?.trim());set('visual',v('visual'));
+      if(it.kind==='chem'){set('a',v('a'));set('b',v('b'));set('tag',v('tag')?.trim());set('lead',v('lead')?.trim());set('body',v('body'));
+        const lines=x=>x===undefined?undefined:x.split('\n').map(s=>s.trim()).filter(Boolean);set('ab',lines(v('ab')));set('ba',lines(v('ba')));
+        const st=$('#f-story');if(st)it.story=st.checked}
+      else set('go',v('go'))}
+    return it;
+  }
+  function commit(){
+    const it=collect();
+    if((tab==='sns'||tab==='fan')?!String(it.text||'').trim():!it.title){msg=(tab==='sns'||tab==='fan')?'本文を入力してください。':'タイトルを入力してください。';msgErr=true;alertInForm();return}
+    if(tab==='fan'&&!it.handle){msg='ハンドルを入力してください。';msgErr=true;alertInForm();return}
+    if(tab!=='special'&&!/^\d{4}\.\d{2}\.\d{2}$/.test(it.date||'')){msg='日付を入力してください。';msgErr=true;alertInForm();return}
+    const arr=draft[tab],i=arr.findIndex(x=>x.id===it.id);
+    if(i<0)(tab==='special'?arr.push(it):arr.unshift(it));else arr[i]=it;
+    dirty=true;saveLocal();msg=editing.isNew?'追加しました。最後に「サイトに公開」を押してください。':'変更を反映しました。最後に「サイトに公開」を押してください。';msgErr=false;editing=null;confirmDel=false;render();
+  }
+  function alertInForm(){const f=$('#admForm');let n=f.querySelector('.adm-note');if(!n){n=document.createElement('div');n.className='adm-note err';f.prepend(n)}n.textContent=msg;msg='';window.scrollTo({top:0,behavior:'instant'})}
+  function blank(){
+    const id=Date.now().toString(36);
+    if(tab==='news')return{id,date:today(),cat:'MEDIA',title:'',thumb:'jam'};
+    const now=new Date(),hm=`${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+    if(tab==='blog')return{id,no:Math.max(0,...draft.blog.map(p=>+p.no||0))+1,member:'hina',date:today(),title:'',body:'',photos:[]};
+    if(tab==='sns')return{id,account:'hina_jam',date:today(),time:hm,text:'',photo:null,likes:'',replies:[]};
+    if(tab==='fan')return{id,handle:'',name:'',date:today(),time:hm,text:'',likes:''};
+    return{id,kind:'chem',label:'',title:'',desc:'',visual:'faces',a:'rin',b:'hina',tag:'',lead:'',body:'',ab:[],ba:[],story:false};
+  }
+  async function publish(){
+    if(busy||!dirty)return;busy=true;msg='';render();
+    try{
+      const r=await GH.put(cfg,draft,sha,'Update content from admin');
+      sha=r.sha;CMS=clone(draft);dirty=false;saveLocal();
+      msg='公開しました。サイトへの反映には1〜2分かかります。';msgErr=false;
+    }catch(e){
+      msgErr=true;
+      if(e.status===409||e.status===422){
+        msg='別の端末で先に更新されていました。最新の内容を読み込み直したので、あなたの変更（下書き）と見比べてから、もう一度「サイトに公開」を押してください。押すと下書きの内容で上書きされます。';
+        try{const r=await GH.get(cfg);CMS=r.data;sha=r.sha}catch(_){}
+      }else msg=ghMsg(e)+' 変更は下書きとして残っています。';
+    }
+    busy=false;render();
+  }
+  document.addEventListener('click',e=>{
+    const b=e.target.closest('#adm [data-a], .adm-bar [data-a]');if(!b)return;e.preventDefault();
+    const a=b.dataset.a;
+    if(a==='settings'){showSettings=true;render();return}
+    if(a==='reload'){ready();return}
+    if(a==='save-cfg'){saveCfgFromForm();return}
+    if(a==='logout'){cfg={...cfg,token:''};storeCfg();showSettings=true;render();return}
+    if(a==='close-settings'){showSettings=false;render();return}
+    if(a==='ph-del'){collect(true);const it=editing.item;if(tab==='sns')it.photo=null;else it.photos.splice(+b.dataset.i,1);renderForm();return}
+    if(a==='tab'){tab=b.dataset.t;msg='';render()}
+    else if(a==='new'){editing={isNew:true,item:blank()};confirmDel=false;msg='';renderForm()}
+    else if(a==='edit'){const it=draft[tab].find(x=>x.id===b.dataset.id);if(it){editing={isNew:false,item:clone(it)};confirmDel=false;msg='';renderForm()}}
+    else if(a==='back'){editing=null;confirmDel=false;render()}
+    else if(a==='delete'){if(!confirmDel){confirmDel=true;collect(true);renderForm();return}
+      draft[tab]=draft[tab].filter(x=>x.id!==editing.item.id);dirty=true;saveLocal();editing=null;confirmDel=false;msg='削除しました。最後に「サイトに公開」を押してください。';msgErr=false;render()}
+    else if(a==='up'||a==='down'){const i=+b.dataset.i,j=a==='up'?i-1:i+1,arr=draft.special;[arr[i],arr[j]]=[arr[j],arr[i]];dirty=true;saveLocal();render()}
+    else if(a==='discard'){draft=clone(CMS);dirty=false;saveLocal();msg='変更を破棄しました。';msgErr=false;editing=null;render()}
+    else if(a==='publish'){if(editing){commit();if(editing)return}publish()}
+  });
+  function head(){
+    const site=cfg.owner&&cfg.repo?`https://${cfg.owner.toLowerCase()}.github.io/${cfg.repo}/`:'./';
+    return `<div class="adm-top"><div><span class="tiny mute">J.a.M</span><h1>Admin</h1></div><span style="display:flex;gap:18px;flex-wrap:wrap"><a class="more" href="./" target="_blank" rel="noopener">サイトを見る</a><button class="more" data-a="settings">設定</button></span></div>`;
+  }
+  let showSettings=false;
+  function renderSettings(){
+    const c=cfg;
+    el().innerHTML=`<div class="adm-top"><div><span class="tiny mute">J.a.M Admin</span><h1>接続設定</h1></div>${c.token?'<button class="more" data-a="close-settings">戻る</button>':''}</div>
+    <div class="adm-note">この管理画面は、GitHub のリポジトリにある <b>cms.json</b> を書き換えてサイトを更新します。<br>
+    設定はこの端末（このブラウザ）の中だけに保存され、ほかの人には見えません。最初に一度入れれば、次からはそのまま使えます。</div>
+    <form class="adm-form" id="cfgForm" novalidate>
+      <div class="row2"><label>GitHubユーザー名<input id="c-owner" autocomplete="username" autocapitalize="off" value="${esc(c.owner)}" placeholder="例：yoritamao"></label>
+      <label>リポジトリ名<input id="c-repo" autocapitalize="off" value="${esc(c.repo)}" placeholder="例：jam-official"></label></div>
+      <label>ブランチ<input id="c-branch" autocapitalize="off" value="${esc(c.branch||'main')}"></label>
+      <label>アクセストークン<small>GitHub の「Fine-grained personal access token」。このリポジトリだけに「Contents: Read and write」を許可したものを使ってください</small>
+        <input id="c-token" type="password" autocomplete="off" autocapitalize="off" value="${esc(c.token)}" placeholder="github_pat_..."></label>
+      <p style="margin:0;font-size:13px"><a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener" style="text-decoration:underline">トークンを作るページを開く（GitHub）</a></p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:6px"><button type="submit" class="adm-btn ink" style="flex:1">保存して接続</button>${c.token?'<button type="button" class="adm-btn warn" data-a="logout">この端末からトークンを消す</button>':''}</div>
+    </form>`;
+    $('#cfgForm').addEventListener('submit',e=>{e.preventDefault();saveCfgFromForm()});
+  }
+  function saveCfgFromForm(){
+    const v=id=>($('#c-'+id)?.value||'').trim();
+    cfg={owner:v('owner'),repo:v('repo').replace(/^.*\//,''),branch:v('branch')||'main',token:v('token')};
+    if(!cfg.owner||!cfg.repo||!cfg.token){const f=$('#cfgForm');let n=f.querySelector('.adm-note');if(!n){n=document.createElement('div');n.className='adm-note err';f.prepend(n)}n.textContent='ユーザー名・リポジトリ名・トークンをすべて入れてください。';return}
+    storeCfg();showSettings=false;ready();
+  }
+  function storeCfg(){try{localStorage.setItem(CFG_KEY,JSON.stringify(cfg))}catch(e){}}
+  return{ready,open};
+})();
+
+
+Admin.ready();
+</script>
+</body>
+</html>
