@@ -198,7 +198,9 @@ const Admin=(()=>{
       <div class="row2"><label>日付<input id="f-date" type="date" value="${esc(toInput(it.date))}"></label>
       <label>カテゴリ<select id="f-cat">${opts(CATS2.map(c=>[c,c]),it.cat)}</select></label></div>
       <label>タイトル<input id="f-title" value="${esc(it.title)}" placeholder="例：1st ALBUM「iro.」発売決定！"></label>
-      <label>サムネイル<select id="f-thumb">${opts(THUMBS,it.thumb)}</select></label>`;
+      <label>サムネイル<small>画像を選ぶと、サイトで押したときに大きく表示されます</small><select id="f-thumb">${opts(/\//.test(it.thumb||'')?[[it.thumb,'アップロードした画像'],...THUMBS]:THUMBS,it.thumb)}</select></label>
+      ${/\//.test(it.thumb||'')?`<img src="${esc(PREVIEW[it.thumb]||it.thumb)}" alt="" style="width:100%;max-width:360px;aspect-ratio:16/10;object-fit:cover;background:#eee">`:''}
+      <label class="upl"><span>＋ 画像をアップロードしてサムネイルにする</span><input id="f-thumbup" type="file" accept="image/*"></label>`;
     else if(tab==='sns') f=`
       <label>アカウント<select id="f-account">${opts(ACCS,it.account)}</select></label>
       <div class="row2"><label>日付<input id="f-date" type="date" value="${esc(toInput(it.date))}"></label>
@@ -247,6 +249,11 @@ const Admin=(()=>{
         ${isNew?'':`<button type="button" class="adm-btn warn" data-a="delete" style="justify-self:start;margin-top:18px">${confirmDel?'本当に削除する（もう一度押す）':'この項目を削除'}</button>`}
         <p class="mute" style="font-size:12px;margin:6px 0 0">反映した内容は、下の「サイトに公開」を押すまで公開サイトには出ません。</p>
       </form>${status()}`;
+    const tu=$('#f-thumbup');if(tu)tu.addEventListener('change',async()=>{
+      const file=tu.files&&tu.files[0];if(!file)return;collect(true);
+      const lab=tu.closest('.upl');lab.firstChild.textContent='アップロード中…';
+      try{editing.item.thumb=await uploadPhoto(file);renderForm()}
+      catch(e){lab.firstChild.textContent='＋ 画像をアップロードしてサムネイルにする';msg=ghMsg(e);msgErr=true;alertInForm()}});
     const up=$('#f-upload');if(up)up.addEventListener('change',async()=>{
       const file=up.files&&up.files[0];if(!file)return;collect(true);
       const lab=up.closest('.upl');lab.firstChild.textContent='アップロード中…';
