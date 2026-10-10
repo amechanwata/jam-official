@@ -240,6 +240,12 @@ const Admin=(()=>{
         <label>A → B のコメント<small>1行ずつ改行で区切る</small><textarea id="f-ab" rows="4">${esc((it.ab||[]).join('\n'))}</textarea></label>
         <label>B → A のコメント<small>1行ずつ改行で区切る</small><textarea id="f-ba" rows="4">${esc((it.ba||[]).join('\n'))}</textarea></label>
         <label class="check"><input id="f-story" type="checkbox"${it.story?' checked':''}> ページ下に STORY（DISTANCE）への入口を出す</label>
+      </fieldset>
+      <fieldset><legend>小説との紐づけ</legend>
+        <p class="mute" style="font-size:12px;margin:0">URLを入れると、特集ページの下に「この日の物語を読む →」が出ます（DISTANCEへの入口の代わりに表示）。FRAMEやSNSには出ません。</p>
+        <div class="row2"><label>話数<small>例：24</small><input id="f-ep" inputmode="numeric" value="${esc(it.ep)}"></label>
+        <label>表示開始日<small>空欄ならすぐ表示</small><input id="f-epFrom" type="date" value="${esc(toInput(it.epFrom))}"></label></div>
+        <label>その話のURL<small>カクヨムの該当話のURLをそのまま貼る</small><input id="f-epUrl" type="url" autocapitalize="off" value="${esc(it.epUrl)}" placeholder="https://kakuyomu.jp/works/…/episodes/…"></label>
       </fieldset>`:`<label>リンク先<select id="f-go">${opts(GOS,it.go)}</select></label>`}`;
     }
     el().innerHTML=`<div class="adm-top"><div><span class="tiny mute">${TABS[tab]}</span><h1>${isNew?'新規作成':'編集'}</h1></div><button class="more" data-a="back">一覧へ戻る</button></div>
@@ -289,13 +295,15 @@ const Admin=(()=>{
     if(tab==='special'){set('label',v('label')?.trim());set('desc',v('desc')?.trim());set('visual',v('visual'));
       if(it.kind==='chem'){set('a',v('a'));set('b',v('b'));set('tag',v('tag')?.trim());set('lead',v('lead')?.trim());set('body',v('body'));
         const lines=x=>x===undefined?undefined:x.split('\n').map(s=>s.trim()).filter(Boolean);set('ab',lines(v('ab')));set('ba',lines(v('ba')));
-        const st=$('#f-story');if(st)it.story=st.checked}
+        const st=$('#f-story');if(st)it.story=st.checked;
+        set('ep',v('ep')?.trim());set('epUrl',v('epUrl')?.trim());if(v('epFrom')!==undefined)it.epFrom=fromInput(v('epFrom'))}
       else set('go',v('go'))}
     return it;
   }
   function commit(){
     const it=collect();
     if((tab==='sns'||tab==='fan')?!String(it.text||'').trim():!it.title){msg=(tab==='sns'||tab==='fan')?'本文を入力してください。':'タイトルを入力してください。';msgErr=true;alertInForm();return}
+    if(tab==='special'&&it.epUrl&&!/^https?:\/\//.test(it.epUrl)){msg='小説のURLは https:// から始まる形で入れてください。';msgErr=true;alertInForm();return}
     if(tab==='fan'&&!it.handle){msg='ハンドルを入力してください。';msgErr=true;alertInForm();return}
     if(tab!=='special'&&!/^\d{4}\.\d{2}\.\d{2}$/.test(it.date||'')){msg='日付を入力してください。';msgErr=true;alertInForm();return}
     const arr=draft[tab],i=arr.findIndex(x=>x.id===it.id);

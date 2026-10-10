@@ -162,6 +162,9 @@ body.quiet .hdr{opacity:0;transform:translateY(-10px);pointer-events:none}
 .gaze .pic{aspect-ratio:3/1}
 .gaze figcaption{margin-top:10px;font-size:20px}
 @media (max-width:820px){.rh-grid{grid-template-columns:1fr 1fr}.rh-text{grid-column:1/-1;order:3;margin-top:30px}.gaze{grid-template-columns:1fr}}
+.ep-link{display:grid;gap:8px;margin-top:70px;border-top:1px solid var(--line);padding-top:22px;justify-items:start}
+.ep-link .ep-t{font-family:var(--serif);font-size:clamp(22px,2.6vw,30px);line-height:1.2;letter-spacing:.02em;transition:opacity .3s}
+.ep-link:hover .ep-t{opacity:.6}
 .story-cta{padding-block:clamp(110px,14vw,220px);display:grid;gap:26px;justify-items:start;border-top:1px solid var(--line)}
 
 /* member detail wide fragment */
@@ -1097,6 +1100,17 @@ function renderMember(id){
 $('#secretClose').addEventListener('click',()=>$('#secret').classList.remove('open'));
 $('#secret').addEventListener('click',e=>{if(e.target.id==='secret')$('#secret').classList.remove('open')});
 
+/* ================= novel link =================
+   A special can point to the episode of the novel that happened "that day".
+   Fields on the special: ep (episode no.), epUrl (full episode URL), epFrom (YYYY.MM.DD, show from this date; empty = now).
+   Never shown on FRAME / SNS: readers should find those traces by themselves. */
+function epLink(c){
+  if(!c||!/^https?:\/\//.test(c.epUrl||''))return '';
+  const d=new Date(),t=`${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`;
+  if(c.epFrom&&c.epFrom>t)return '';
+  const no=String(c.ep||'').trim();
+  return `<a class="ep-link" href="${esc(c.epUrl)}" target="_blank" rel="noopener"><span class="label mute">Related Story${no?' · EP.'+esc(no.padStart(2,'0')):''}</span><span class="ep-t">この日の物語を読む →</span></a>`;
+}
 /* ================= chemistry ================= */
 function renderChem(id){
   const c=SPEC(id)||CMS.special.find(x=>x.kind==='chem');if(!c||!M[c.a]||!M[c.b]){$('#chemBody').innerHTML='<p class="mute">この特集は見つかりませんでした。</p><button class="more" data-go="special">SPECIAL</button>';return}
@@ -1121,7 +1135,7 @@ function renderChem(id){
          <button class="arrow" aria-pressed="false" data-dir="ba">${b.en} → ${a.en}</button>
        </div>
        <div class="voice" id="voice"></div>
-       ${c.story?`<div style="margin-top:70px;border-top:1px solid var(--line);padding-top:22px;display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap"><span class="label mute">Story</span><button class="more" data-go="distance">DISTANCE</button></div>`:''}
+       ${epLink(c)||(c.story?`<div style="margin-top:70px;border-top:1px solid var(--line);padding-top:22px;display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap"><span class="label mute">Story</span><button class="more" data-go="distance">DISTANCE</button></div>`:'')}
      </div>
    </div>`;
   const setV=dir=>{const from=dir==='ab'?a:b,to=dir==='ab'?b:a,lines=(c[dir]||[]).filter(Boolean);
